@@ -1,2 +1,7 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import { page } from '$app/stores';
+</script>
+
+<a class:active={$page.url.pathname === '/record'} sveltekit:prefetch href="/record"
+	>I want to record a story</a
+>
