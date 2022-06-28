@@ -1,9 +1,8 @@
 <script>
-	import FileUpload from 'src/components/FileUpload.svelte';
 	import Header from '../components/Header.svelte';
-	let fileName = 'testFile.txt';
+	import FileUpload from '../components/FileUpload.svelte';
 </script>
 
 <Header />
 <h2>Record A Story</h2>
-<FileUpload {fileName} />
+<FileUpload />
