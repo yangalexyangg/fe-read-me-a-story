@@ -4,7 +4,8 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				Amatic: ['Amatic SC', 'cursive']
+				Amatic: ['Amatic SC', 'cursive'],
+				Josefin: ['Josefin Sans', 'sans-serif']
 			}
 		}
 	},
