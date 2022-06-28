@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ref, uploadBytes } from 'firebase/storage';
+	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
 	// TODO: currently imports file directly, this should be passed into component
 	import file from '../data/testFile.txt';
@@ -23,7 +23,7 @@
 		const response = await fetch(file);
 		if (response.ok) {
 			const fileContents = await response.blob();
-			const snapshot = await uploadBytes(recordingRef, fileContents, metadata);
+			const snapshot = await uploadBytesResumable(recordingRef, fileContents, metadata);
 			console.log(`${metadata.customMetadata.niceName} was uploaded to ${snapshot.ref}`);
 			fileUploaded = true;
 		} else {
