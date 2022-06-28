@@ -4,7 +4,7 @@
 	import { ref, listAll } from 'firebase/storage';
 
 	interface Book {
-		name: string
+		fileName: string
 	}
 
 	let books:Book[] = [];
@@ -14,7 +14,7 @@
 	const getBooks = async () => {
 		const { items } = await listAll(listRef);
 		books = items.map((item) => {
-			return {name: item.name}
+			return {fileName: item.name}
 		});
 	};
 
@@ -23,7 +23,7 @@
 
 <ul>
 	{#each books as book}
-		<li>{book.name}</li>
+		<li>{book.fileName}</li>
 	{/each}
 </ul>
 
