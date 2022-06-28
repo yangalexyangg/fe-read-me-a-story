@@ -8,8 +8,8 @@
 	// Date.now() is temp workaround to create unique(ish) filenames and prevent overwriting
 	const recordingRef = ref(storage, `recordings/recording-${Date.now()}.ogg`);
 
-	let fileUploaded = false;
-	let isUploading = false;
+	let fileUploaded:boolean = false;
+	let isUploading:boolean = false;
 
 	// TODO: convert to interface?
 	const metadata = {
@@ -17,36 +17,55 @@
 		customMetadata: { niceName: '' }
 	};
 
-	const uploadFile = async () => {
+	let progress:number = 0;
+
+	const uploadFile = () => {
 		isUploading = true;
-		const snapshot = await uploadBytesResumable(recordingRef, recordingFile, metadata);
-		console.log(`${metadata.customMetadata.niceName} was uploaded to ${snapshot.ref}`);
-		fileUploaded = true;
+		const uploadTask = uploadBytesResumable(recordingRef, recordingFile, metadata);
+		
+		uploadTask.on('state_changed', (progressSnapshot) => {
+			progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
+			if(progress === 100){
+				fileUploaded = true;
+			}
+		})
 	};
+
 
 	const handleReset = () => {
 		isUploading = false;
 		fileUploaded = false;
 		metadata.customMetadata.niceName = '';
 	};
+
 </script>
 
-<section>
-	{#if fileUploaded}
-		<p>File uploaded!</p>
-		<button on:click={handleReset}  class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
-	{:else}
-		<form>
-			<label
-				>Story name <input
-					type="text"
-					required
-					bind:value={metadata.customMetadata.niceName}
-				/></label
-			>
-		</form>
+<section class="flex-col mt-6 text-center">
+
+	<form>
+		<label class="text-amber-100">Story name <input
+			class="text-[#000000]"
+				type="text"
+				required
+				bind:value={metadata.customMetadata.niceName}
+			/></label>
+	</form>
+
+	{#if !fileUploaded}
 		<button on:click={uploadFile} class={isUploading ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
 	{/if}
+
+	{#if fileUploaded}
+		<button on:click={handleReset} class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
+	{/if}
+
+	{#if fileUploaded}
+		<p class="text-amber-100">File uploaded!</p>
+	{:else if isUploading}
+		<p class="text-amber-100">File uploading {Math.round(progress)}% done</p>
+	{/if}
+
+
 </section>
 
 <style></style>
