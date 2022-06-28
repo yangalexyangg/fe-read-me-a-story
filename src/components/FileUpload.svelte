@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ref, uploadBytes, listAll } from 'firebase/storage';
 	import { storage } from '../utils/admin';
+	// TODO: currently imports file directly, this should be passed into component
 	import file from '../data/testFile.txt';
 
 	// specify where to store recordings in firebase
@@ -19,7 +20,7 @@
 		if (response.ok) {
 			const fileContents = await response.blob();
 			const snapshot = await uploadBytes(recordingRef, fileContents, metadata);
-			console.log(`${snapshot.metadata.customMetadata.niceName} uploaded!`);
+			console.log(`${snapshot.metadata.customMetadata.niceName} was uploaded to ${snapshot.ref}`);
 		} else {
 			// placeholder error handling
 			const message = `An error has occured: ${response.status}`;
