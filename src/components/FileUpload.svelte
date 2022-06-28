@@ -9,6 +9,7 @@
 	const recordingRef = ref(storage, `recordings/testFile-${Date.now()}.txt`);
 
 	let fileUploaded = false;
+	let isUploading = false;
 
 	// TODO: convert to interface?
 	const metadata = {
@@ -18,6 +19,7 @@
 
 	const uploadFile = async () => {
 		console.log('uploading file');
+		isUploading = true;
 		const response = await fetch(file);
 		if (response.ok) {
 			const fileContents = await response.blob();
@@ -32,6 +34,7 @@
 	};
 
 	const handleReset = () => {
+		isUploading = false;
 		fileUploaded = false;
 		metadata.customMetadata.niceName = '';
 	};
@@ -40,7 +43,7 @@
 <section>
 	{#if fileUploaded}
 		<p>File uploaded!</p>
-		<button on:click={handleReset}>Upload another file?</button>
+		<button on:click={handleReset}  class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
 	{:else}
 		<form>
 			<label
@@ -51,7 +54,7 @@
 				/></label
 			>
 		</form>
-		<button on:click={uploadFile}>Upload</button>
+		<button on:click={uploadFile} class={isUploading ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
 	{/if}
 </section>
 
