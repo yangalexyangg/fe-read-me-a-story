@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { ref, uploadBytes } from 'firebase/storage';
 	import { storage } from '../utils/admin';
-	// TODO: currently imports file directly, this should be passed into component
-	import file from '../data/testFile.txt';
+
+	export let recordingFile: Blob 
 
 	// specify where to store recordings in firebase
 	// Date.now() is temp workaround to create unique(ish) filenames and prevent overwriting
-	const recordingRef = ref(storage, `recordings/testFile-${Date.now()}.txt`);
+	const recordingRef = ref(storage, `recordings/recording-${Date.now()}.ogg`);
 
 	let fileUploaded = false;
 
@@ -17,18 +17,9 @@
 	};
 
 	const uploadFile = async () => {
-		console.log('uploading file');
-		const response = await fetch(file);
-		if (response.ok) {
-			const fileContents = await response.blob();
-			const snapshot = await uploadBytes(recordingRef, fileContents, metadata);
-			console.log(`${metadata.customMetadata.niceName} was uploaded to ${snapshot.ref}`);
-			fileUploaded = true;
-		} else {
-			// placeholder error handling
-			const message = `An error has occured: ${response.status}`;
-			throw new Error(message);
-		}
+		const snapshot = await uploadBytes(recordingRef, recordingFile, metadata);
+		console.log(`${metadata.customMetadata.niceName} was uploaded to ${snapshot.ref}`);
+		fileUploaded = true;
 	};
 
 	const handleReset = () => {
