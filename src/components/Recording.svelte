@@ -5,19 +5,17 @@
   onMount(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.ondataavailable = (e: any) => media.push(e.data)
+    mediaRecorder.ondataavailable = (event: any) => media.push(event.data)
     mediaRecorder.onstop = function(){
-      const audio = document.querySelector('audio');
+      const audio: any = document.querySelector('audio');
       const blob = new Blob(media, {'type' : 'audio/ogg; codecs=opus' });
       media = []; 
       audio.src = window.URL.createObjectURL(blob);
     }
   })
-  function startRecording() { mediaRecorder.start() 
-                            console.log("start recording");
-}
-  function stopRecording() { mediaRecorder.stop()
-  console.log("stop recording"); }
+
+  function startRecording() { mediaRecorder.start() }
+  function stopRecording() { mediaRecorder.stop() }
 </script>
 
 <section>
