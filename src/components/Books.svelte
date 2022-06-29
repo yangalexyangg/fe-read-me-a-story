@@ -32,11 +32,14 @@
 </script>
 
 <ul>
+	<h2 class="font-Josefin text-amber-100 text-4xl font-normal text-center">Our Bookshelf</h2>
 	{#each books as book}
 		<li>
-			<h2>{book.title}</h2>
-			<a href={book.url}>{book.fileName}</a> <!--relative links are broken, placeholder for now-->
-			<img src={book.artworkPath} alt={book.title}>
+			<section class="bg-[#b9f6ca] max-w-xs m-auto p-8 mb-5 mt-5 rounded" >
+				<h2>{book.title}</h2>
+				<img src={book.artworkPath} alt={book.title} class="border-8 border-solid border-amber-100 rounded">
+				<a href={book.url}>{book.fileName}</a> <!--relative links are broken, placeholder for now-->
+			</section>
 		</li>
 	{/each}
 </ul>
