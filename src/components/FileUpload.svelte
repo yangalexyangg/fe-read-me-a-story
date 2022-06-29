@@ -7,6 +7,7 @@
 	let fileUploaded:boolean = false;
 	let isUploading:boolean = false;	
 	let progress:number = 0;
+	let errorMessage:string = ""
 
 	// specify where to store recordings in firebase
 	// Date.now() is temp workaround to create unique(ish) filenames and prevent overwriting
@@ -22,10 +23,29 @@
 		isUploading = true;
 		const uploadTask = uploadBytesResumable(recordingRef, recordingFile, metadata);
 		
-		uploadTask.on('state_changed', (progressSnapshot) => {
-			progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
-			if(progress === 100) fileUploaded = true;
-		})
+		uploadTask.on('state_changed', 
+			(progressSnapshot) => {
+				progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
+				if(progress === 100) fileUploaded = true;
+			},
+			(error)=>{
+				switch (error.code) {
+      				case 'storage/unauthorized':
+        			errorMessage="You currently do not have the correct permissions to upload stories."
+        				break;
+      				case 'storage/canceled':
+       					errorMessage="You have cancelled the upload."
+        				break;
+					case 'storage/unauthenticated':
+       					errorMessage="Unauthenticated user detected. Please check your login."
+        				break;
+					case 'storage/bucket-not-found':
+					case 'storage/project-not-found':
+       					errorMessage="We are currently experiencing some technical issues. Please try again later."
+        				break;
+					}	
+			}
+		)
 	};
 
 	const handleReset = () => {
@@ -56,7 +76,9 @@
 		<button on:click={handleReset} class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
 	{/if}
 
-	{#if fileUploaded}
+	{#if errorMessage}
+		<p class="text-amber-100">{errorMessage}</p>
+	{:else if fileUploaded}
 		<p class="text-amber-100">File uploaded!</p>
 	{:else if isUploading}
 		<p class="text-amber-100">File uploading... {Math.round(progress)}% done</p>
