@@ -1,3 +1,4 @@
 import { writable } from 'svelte/store';
 
-export const recordButtonsDisabled = writable(false);
+export const recordingIsDisabled = writable(false);
+export const stopIsDisabled = writable(false);
