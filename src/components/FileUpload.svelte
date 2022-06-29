@@ -1,16 +1,17 @@
 <script lang="ts">
 	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
-	import {recordingIsDisabled, stopIsDisabled} from "../store"
+	import {recordingIsDisabled, stopIsDisabled, filePresentToUpload} from "../store"
 
 	export let recordingFile: Blob 
+	let fileUploaded:boolean = false;
+	let isUploading:boolean = false;	
+	let progress:number = 0;
+	let errorMessage:string = ""
 
 	// specify where to store recordings in firebase
 	// Date.now() is temp workaround to create unique(ish) filenames and prevent overwriting
 	const recordingRef = ref(storage, `recordings/recording-${Date.now()}.ogg`);
-
-	let fileUploaded:boolean = false;
-	let isUploading:boolean = false;
 
 	// TODO: convert to interface?
 	const metadata = {
@@ -18,24 +19,39 @@
 		customMetadata: { niceName: '' }
 	};
 
-	let progress:number = 0;
-
 	const uploadFile = () => {
 		isUploading = true;
 		const uploadTask = uploadBytesResumable(recordingRef, recordingFile, metadata);
 		
-		uploadTask.on('state_changed', (progressSnapshot) => {
-			progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
-			if(progress === 100){
-				fileUploaded = true;
+		uploadTask.on('state_changed', 
+			(progressSnapshot) => {
+				progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
+				if(progress === 100) fileUploaded = true;
+			},
+			(error)=>{
+				switch (error.code) {
+      				case 'storage/unauthorized':
+        			errorMessage="You currently do not have the correct permissions to upload stories."
+        				break;
+      				case 'storage/canceled':
+       					errorMessage="You have cancelled the upload."
+        				break;
+					case 'storage/unauthenticated':
+       					errorMessage="Unauthenticated user detected. Please check your login."
+        				break;
+					case 'storage/bucket-not-found':
+					case 'storage/project-not-found':
+       					errorMessage="We are currently experiencing some technical issues. Please try again later."
+        				break;
+					}	
 			}
-		})
+		)
 	};
-
 
 	const handleReset = () => {
 		recordingIsDisabled.set(false)
 		stopIsDisabled.set(false)
+		filePresentToUpload.set(false)
 		isUploading = false;
 		fileUploaded = false;
 		metadata.customMetadata.niceName = '';
@@ -55,15 +71,17 @@
 	</form>
 
 	{#if !fileUploaded}
-		<button on:click={uploadFile} class={isUploading ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
+		<button disabled={$filePresentToUpload===false} on:click={uploadFile} class={isUploading || $filePresentToUpload===false ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
 	{:else }
 		<button on:click={handleReset} class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
 	{/if}
 
-	{#if fileUploaded}
+	{#if errorMessage}
+		<p class="text-amber-100">{errorMessage}</p>
+	{:else if fileUploaded}
 		<p class="text-amber-100">File uploaded!</p>
 	{:else if isUploading}
-		<p class="text-amber-100">File uploading {Math.round(progress)}% done</p>
+		<p class="text-amber-100">File uploading... {Math.round(progress)}% done</p>
 	{/if}
 
 
