@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import {recordingIsDisabled, stopIsDisabled, filePresentToUpload} from "../store"
+  import {recordingIsDisabled, stopIsDisabled, uploadIsDisabled} from "../store"
   let media: any[] = [];
   let mediaRecorder: any = null;
   export let blob: any
@@ -23,7 +23,7 @@
 
   function stopRecording() { mediaRecorder.stop() 
   $stopIsDisabled = true;
-  filePresentToUpload.set(true)
+  uploadIsDisabled.set(true)
   }
 </script>
 
