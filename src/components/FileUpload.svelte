@@ -9,6 +9,7 @@
 	let isUploading:boolean = false;	
 	let progress:number = 0;
 	let errorMessage:string = ""
+	let onlineStatus:boolean = false
 	
 	onMount(async ()=>{
 		recordingIsDisabled.set(false)
@@ -66,6 +67,8 @@
 
 </script>
 
+<svelte:window bind:online={onlineStatus}/>
+
 <section class="flex-col mt-6 text-center">
 
 	<form>
@@ -78,13 +81,14 @@
 	</form>
 
 	{#if !fileUploaded}
-		<button disabled={$uploadIsDisabled===false} on:click={uploadFile} class={isUploading || $uploadIsDisabled===false ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
+		<button disabled={!$uploadIsDisabled || !onlineStatus} on:click={uploadFile} class={isUploading || !$uploadIsDisabled || !onlineStatus ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
 	{:else }
 		<button on:click={handleReset} class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
 	{/if}
 
-
-	{#if errorMessage}
+	{#if !onlineStatus}
+		<p class="text-amber-100">You are presently not online.</p>
+	{:else if errorMessage}
 	<section class="flex-col">
 		<p class="text-amber-100">{errorMessage}</p>
 		<p class="text-amber-100">Please try to reupload.</p>
