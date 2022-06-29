@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
+  import {recordButtonsDisabled} from "../store"
   let media: any[] = [];
   let mediaRecorder: any = null;
   export let blob: any
@@ -21,9 +22,16 @@
     recordingIsDisabled = true;
   }
 
-  let stopIsDisabled:boolean = false;
+  export let stopIsDisabled:boolean = false;
   function stopRecording() { mediaRecorder.stop() 
   stopIsDisabled = true;
+  }
+
+  if($recordButtonsDisabled===true){
+    console.log("here")
+    stopIsDisabled = false
+    recordingIsDisabled = false
+    // recordButtonsDisabled.set(false)
   }
 </script>
 
@@ -32,3 +40,5 @@
   <button disabled = {stopIsDisabled} on:click={stopRecording} class={stopIsDisabled ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Stop</button>
   <audio controls class="m-auto"/>
 </section>
+
+<p>{$recordButtonsDisabled}</p>
