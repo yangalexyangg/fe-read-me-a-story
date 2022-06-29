@@ -1,4 +1,6 @@
 <script lang="ts">
+
+	
 	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
 	import {recordingIsDisabled, stopIsDisabled, filePresentToUpload} from "../store"
@@ -8,6 +10,7 @@
 	let isUploading:boolean = false;	
 	let progress:number = 0;
 	let errorMessage:string = ""
+	let onlineStatus:boolean = false
 
 	// specify where to store recordings in firebase
 	// Date.now() is temp workaround to create unique(ish) filenames and prevent overwriting
@@ -59,6 +62,8 @@
 
 </script>
 
+<svelte:window bind:online={onlineStatus}/>
+
 <section class="flex-col mt-6 text-center">
 
 	<form>
@@ -71,12 +76,14 @@
 	</form>
 
 	{#if !fileUploaded}
-		<button disabled={$filePresentToUpload===false} on:click={uploadFile} class={isUploading || $filePresentToUpload===false ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
+		<button disabled={!$filePresentToUpload} on:click={uploadFile} class={isUploading || !$filePresentToUpload ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
 	{:else }
 		<button on:click={handleReset} class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
 	{/if}
 
-	{#if errorMessage}
+	{#if !onlineStatus}
+		<p class="text-amber-100">You are presently not online.</p>
+	{:else if errorMessage}
 		<p class="text-amber-100">{errorMessage}</p>
 	{:else if fileUploaded}
 		<p class="text-amber-100">File uploaded!</p>
