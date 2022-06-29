@@ -4,17 +4,17 @@
 	import {recordingIsDisabled, stopIsDisabled, filePresentToUpload} from "../store"
 	import { onMount } from 'svelte'
 
-	onMount(async ()=>{
-		recordingIsDisabled.set(false)
-	stopIsDisabled.set(false)
-	filePresentToUpload.set(false)
-	})
-
 	export let recordingFile: Blob 
 	let fileUploaded:boolean = false;
 	let isUploading:boolean = false;	
 	let progress:number = 0;
 	let errorMessage:string = ""
+	
+	onMount(async ()=>{
+		recordingIsDisabled.set(false)
+		stopIsDisabled.set(false)
+		filePresentToUpload.set(false)
+	})
 
 	// specify where to store recordings in firebase
 	// Date.now() is temp workaround to create unique(ish) filenames and prevent overwriting

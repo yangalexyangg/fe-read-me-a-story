@@ -1,15 +1,7 @@
 <script>
 	import Header from '../components/Header.svelte';
 	import { page } from '$app/stores';
-	import {recordingIsDisabled, stopIsDisabled, filePresentToUpload} from "../store"
-
-// 	const handleClick = ()=>{
-// 	recordingIsDisabled.set(false)
-// 	stopIsDisabled.set(false)
-// 	filePresentToUpload.set(false)
-// }on:click={handleClick}
 </script>
-
 
 <Header/>
 <ul class="text-center">
