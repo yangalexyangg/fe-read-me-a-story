@@ -2,6 +2,13 @@
 	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
 	import {recordingIsDisabled, stopIsDisabled, filePresentToUpload} from "../store"
+	import { onMount } from 'svelte'
+
+	onMount(async ()=>{
+		recordingIsDisabled.set(false)
+	stopIsDisabled.set(false)
+	filePresentToUpload.set(false)
+	})
 
 	export let recordingFile: Blob 
 	let fileUploaded:boolean = false;
@@ -76,8 +83,12 @@
 		<button on:click={handleReset} class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
 	{/if}
 
+
 	{#if errorMessage}
+	<section class="flex-col">
 		<p class="text-amber-100">{errorMessage}</p>
+		<p class="text-amber-100">Please try to reupload.</p>
+	</section>
 	{:else if fileUploaded}
 		<p class="text-amber-100">File uploaded!</p>
 	{:else if isUploading}
