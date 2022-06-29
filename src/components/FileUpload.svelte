@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
-	import {recordingIsDisabled, stopIsDisabled, filePresentToUpload} from "../store"
+	import {recordingIsDisabled, stopIsDisabled, uploadIsDisabled} from "../store"
 	import { onMount } from 'svelte'
 
 	export let recordingFile: Blob 
@@ -13,7 +13,7 @@
 	onMount(async ()=>{
 		recordingIsDisabled.set(false)
 		stopIsDisabled.set(false)
-		filePresentToUpload.set(false)
+		uploadIsDisabled.set(false)
 	})
 
 	// specify where to store recordings in firebase
@@ -58,7 +58,7 @@
 	const handleReset = () => {
 		recordingIsDisabled.set(false)
 		stopIsDisabled.set(false)
-		filePresentToUpload.set(false)
+		uploadIsDisabled.set(false)
 		isUploading = false;
 		fileUploaded = false;
 		metadata.customMetadata.niceName = '';
@@ -78,7 +78,7 @@
 	</form>
 
 	{#if !fileUploaded}
-		<button disabled={$filePresentToUpload===false} on:click={uploadFile} class={isUploading || $filePresentToUpload===false ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
+		<button disabled={$uploadIsDisabled===false} on:click={uploadFile} class={isUploading || $uploadIsDisabled===false ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
 	{:else }
 		<button on:click={handleReset} class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
 	{/if}
