@@ -1,9 +1,8 @@
 <script lang="ts">
-
-	
 	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
-	import {recordingIsDisabled, stopIsDisabled, filePresentToUpload} from "../store"
+	import {recordingIsDisabled, stopIsDisabled, uploadIsDisabled} from "../store"
+	import { onMount } from 'svelte'
 
 	export let recordingFile: Blob 
 	let fileUploaded:boolean = false;
@@ -11,6 +10,12 @@
 	let progress:number = 0;
 	let errorMessage:string = ""
 	let onlineStatus:boolean = false
+	
+	onMount(async ()=>{
+		recordingIsDisabled.set(false)
+		stopIsDisabled.set(false)
+		uploadIsDisabled.set(false)
+	})
 
 	// specify where to store recordings in firebase
 	// Date.now() is temp workaround to create unique(ish) filenames and prevent overwriting
@@ -54,7 +59,7 @@
 	const handleReset = () => {
 		recordingIsDisabled.set(false)
 		stopIsDisabled.set(false)
-		filePresentToUpload.set(false)
+		uploadIsDisabled.set(false)
 		isUploading = false;
 		fileUploaded = false;
 		metadata.customMetadata.niceName = '';
@@ -76,7 +81,7 @@
 	</form>
 
 	{#if !fileUploaded}
-		<button disabled={!$filePresentToUpload || !onlineStatus} on:click={uploadFile} class={isUploading || !$filePresentToUpload || !onlineStatus ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
+		<button disabled={!$uploadIsDisabled || !onlineStatus} on:click={uploadFile} class={isUploading || !$uploadIsDisabled || !onlineStatus ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
 	{:else }
 		<button on:click={handleReset} class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
 	{/if}
@@ -84,7 +89,10 @@
 	{#if !onlineStatus}
 		<p class="text-amber-100">You are presently not online.</p>
 	{:else if errorMessage}
+	<section class="flex-col">
 		<p class="text-amber-100">{errorMessage}</p>
+		<p class="text-amber-100">Please try to reupload.</p>
+	</section>
 	{:else if fileUploaded}
 		<p class="text-amber-100">File uploaded!</p>
 	{:else if isUploading}
