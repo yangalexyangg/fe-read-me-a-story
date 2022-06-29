@@ -39,7 +39,7 @@
 		<li class="bg-amber-100 max-w-xs m-auto py-5 mb-5 mt-5 text-center border-8 border-solid border-[#b9f6ca] rounded">
 			<h2 class="text-xl">{book.title}</h2>
 			<img src={book.artworkPath} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]">
-			<a class:active={$page.url.pathname === `/${book.title}`} sveltekit:prefetch href={`/${book.title}`} class="underline underline-offset-4 decoration-solid decoration-2">Listen: {book.fileName}</a>
+			<a class:active={$page.url.pathname === `/${book.title}`} sveltekit:prefetch href={`/${book.title}`} class="underline underline-offset-4 decoration-solid decoration-2">Listen to story</a>
 		</li>
 	{/each}
 </ul>
