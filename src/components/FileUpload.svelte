@@ -76,7 +76,7 @@
 	</form>
 
 	{#if !fileUploaded}
-		<button disabled={!$filePresentToUpload} on:click={uploadFile} class={isUploading || !$filePresentToUpload ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
+		<button disabled={!$filePresentToUpload || !onlineStatus} on:click={uploadFile} class={isUploading || !$filePresentToUpload || !onlineStatus ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Upload</button>
 	{:else }
 		<button on:click={handleReset} class="bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4">Upload another file?</button>
 	{/if}
