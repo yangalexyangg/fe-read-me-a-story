@@ -22,7 +22,6 @@
 			return {
 				title: await getMetadata(ref(storage, item.fullPath)).then((metadata) => metadata.customMetadata.niceName || "placeholder"),
 				fileName: item.name,
-				// artworkPath: "https://placekitten.com/g/200/200",
 				artworkPath: src,
 				url: await getDownloadURL(ref(storage, item.fullPath))
 			}
@@ -37,10 +36,10 @@
 	<h2 class="font-Josefin text-amber-100 text-4xl font-normal text-center">Our Bookshelf</h2>
 	{#each books as book}
 		<li>
-			<section class="bg-amber-100 max-w-xs m-auto py-5 mb-5 mt-5 rounded text-center" >
+			<section class="bg-amber-100 max-w-xs m-auto py-5 mb-5 mt-5 text-center border-8 border-solid border-[#b9f6ca] rounded" >
 				<h2 class="text-xl">{book.title}</h2>
-				<img src={book.artworkPath} alt={book.title} class="m-auto mt-4 mb-4 max-w-[13rem]">
-				<a href={book.url}>{book.fileName}</a> <!--relative links are broken, placeholder for now-->
+				<img src={book.artworkPath} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]">
+				<a href={book.url} class="underline underline-offset-4 decoration-solid decoration-2">{book.fileName}</a> <!--relative links are broken, placeholder for now-->
 			</section>
 		</li>
 	{/each}
