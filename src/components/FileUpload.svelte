@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
+	import {recordingIsDisabled, stopIsDisabled} from "../store"
 
 	export let recordingFile: Blob 
 
@@ -33,6 +34,8 @@
 
 
 	const handleReset = () => {
+		recordingIsDisabled.set(false)
+		stopIsDisabled.set(false)
 		isUploading = false;
 		fileUploaded = false;
 		metadata.customMetadata.niceName = '';

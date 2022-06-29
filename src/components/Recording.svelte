@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
+  import {recordingIsDisabled, stopIsDisabled} from "../store"
   let media: any[] = [];
   let mediaRecorder: any = null;
   export let blob: any
@@ -14,21 +15,19 @@
       audio.src = window.URL.createObjectURL(blob);
     }
   })
-  let recordingIsDisabled:boolean = false;
 
   function startRecording() { 
     mediaRecorder.start() 
-    recordingIsDisabled = true;
+    $recordingIsDisabled = true;
   }
 
-  let stopIsDisabled:boolean = false;
   function stopRecording() { mediaRecorder.stop() 
-  stopIsDisabled = true;
+  $stopIsDisabled = true;
   }
 </script>
 
 <section class="text-center">
-  <button disabled = {recordingIsDisabled} on:click={startRecording} class={recordingIsDisabled ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Record</button>
-  <button disabled = {stopIsDisabled} on:click={stopRecording} class={stopIsDisabled ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Stop</button>
+  <button disabled = {($recordingIsDisabled)} on:click={startRecording} class={$recordingIsDisabled ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Record</button>
+  <button disabled = {$stopIsDisabled} on:click={stopRecording} class={$stopIsDisabled ? "bg-slate-400 px-3 py-1 rounded mx-1.5 my-4":"bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4"}>Stop</button>
   <audio controls class="m-auto"/>
 </section>
