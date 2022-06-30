@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-    import { signOut } from 'firebase/auth';
-    import { auth } from '../utils/admin';
-    import { onMount } from 'svelte';
-    import { userId } from '../store';
+	import { signOut } from 'firebase/auth';
+	import { auth } from '../utils/admin';
+	import { onMount } from 'svelte';
+	import { userId } from '../store';
 	let src: string = 'images/owl-logo.png';
 
-    onMount(()=> {
-        signOut(auth).then(() => {
-            userId.set("")
-        }).catch((error) => {
-            console.error(error)
-        })
-
-    })
-
+	onMount(() => {
+		signOut(auth)
+			.then(() => {
+				userId.set('');
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	});
 </script>
 
 <img class="m-auto mt-64 w-40" {src} alt="owly" />
