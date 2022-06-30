@@ -16,7 +16,7 @@ export const fetchUserStatus = (email: string) => {
 	return Promise.resolve('not found');
 };
 
-export const createNewuserAndFamily = (
+export const createNewUserAndFamily = (
 	email: string,
 	fullName: string,
 	displayName: string,

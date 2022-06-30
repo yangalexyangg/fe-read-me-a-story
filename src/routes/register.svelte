@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { createNewuserAndFamily, fetchUserStatus } from '../utils/api-request';
+	import { createNewUserAndFamily, fetchUserStatus } from '../utils/api-request';
 
 	import Header from '../components/Header.svelte';
+	import LogIn from '../components/LogIn.svelte';
+	import Logout from './logout.svelte';
 
 	let isExistingUser: boolean = false;
 	let isNewUser: boolean = false;
@@ -40,24 +42,31 @@
 	const handleRegister = async () => {
 		console.log('registering baby!');
 		//call to faked api call in api-requests
-		const userAndFamily = await createNewuserAndFamily(
+		const userAndFamily = await createNewUserAndFamily(
 			user.email,
 			user.fullName,
 			user.displayName,
 			user.password,
 			family.familyName
 		);
-		isNewUser = false;
 		if (userAndFamily === 'user and family created') {
+			console.log('is this right?');
 			accountCreated = true;
+			isNewUser = false;
 		}
 	};
 </script>
 
 <Header />
-<h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Register</h2>
 
-{#if !isExistingUser && !isNewUser}
+{#if accountCreated}
+	<h2>Account created, please login!</h2>
+	<LogIn />
+{/if}
+
+{#if !accountCreated && !isExistingUser && !isNewUser}
+	<h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Register</h2>
+
 	<div class="flex justify-center">
 		<form on:submit|preventDefault={handleSubmit}>
 			<label for="email" class="block text-amber-100">Email address</label>
@@ -100,6 +109,4 @@
 		<input bind:value={user.password} type="password" class="mb-6 rounded bg-amber-100 p-2" /><br />
 		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2 text-black">Register</button>
 	</form>
-{:else if accountCreated}
-	<p>account created</p>
 {/if}
