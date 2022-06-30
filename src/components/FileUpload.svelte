@@ -3,7 +3,7 @@
 	import { storage } from '../utils/admin';
 	import {recordingIsDisabled, stopIsDisabled, uploadIsDisabled} from "../store"
 	import { onMount } from 'svelte'
-
+	
 	export let recordingFile: Blob 
 	let fileUploaded:boolean = false;
 	let isUploading:boolean = false;	
