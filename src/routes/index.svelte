@@ -1,9 +1,17 @@
-<script>
+<script lang="ts">
 	import Header from '../components/Header.svelte';
+	import LogIn from '../components/LogIn.svelte'
 	import { page } from '$app/stores';
+
+	let userLoggedIn:boolean = false;
+
 </script>
 
 <Header />
+
+{#if !userLoggedIn}
+<LogIn/> 
+{:else}
 <ul class="text-center">
 	<li class="mb-11">
 		<a
@@ -28,3 +36,4 @@
 		>
 	</li>
 </ul>
+{/if}
