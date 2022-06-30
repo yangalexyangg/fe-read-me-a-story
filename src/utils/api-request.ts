@@ -11,3 +11,7 @@ export const fetchStories = () => {
 export const postStory = (story: any) => {
 	return apiCall.post('/stories', story);
 };
+
+export const fetchUserStatus = (email:string) => {
+	return Promise.resolve("not found")
+}
