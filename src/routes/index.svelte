@@ -4,14 +4,13 @@
 	import { page } from '$app/stores';
 
 	let loggedIn: boolean = false;
-
 </script>
 
-<Header />
 
 {#if !loggedIn}
-	<LogIn bind:userLoggedIn = {loggedIn}/>
+	<LogIn bind:userLoggedIn={loggedIn} />
 {:else}
+<Header />
 	<ul class="text-center">
 		<li class="mb-11">
 			<a
