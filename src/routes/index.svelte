@@ -6,11 +6,10 @@
 	let loggedIn: boolean = false;
 </script>
 
-
 {#if !loggedIn}
 	<LogIn bind:userLoggedIn={loggedIn} />
 {:else}
-<Header />
+	<Header />
 	<ul class="text-center">
 		<li class="mb-11">
 			<a
