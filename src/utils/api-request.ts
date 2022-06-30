@@ -7,3 +7,7 @@ export const fetchStories = () => {
 		return res.data;
 	});
 };
+
+export const postStory = (story: any) => {
+	return apiCall.post('/stories', story);
+};
