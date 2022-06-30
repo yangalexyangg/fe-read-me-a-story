@@ -10,11 +10,13 @@
 		const stream: MediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 		mediaRecorder = new MediaRecorder(stream);
 		mediaRecorder.ondataavailable = (event: BlobEvent) => media.push(event.data);
-		mediaRecorder.onstop = function () {
+		mediaRecorder.onstop = () => {
 			const audio: HTMLAudioElement | null = document.querySelector('audio');
 			blob = new Blob(media, { type: 'audio/ogg; codecs=opus' });
 			media = [];
-			audio.src = window.URL.createObjectURL(blob);
+			if (audio) {
+				audio.src = window.URL.createObjectURL(blob);
+			}
 		};
 	});
 
