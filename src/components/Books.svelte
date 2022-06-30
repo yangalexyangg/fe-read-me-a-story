@@ -11,13 +11,13 @@
 		url: string;
 	}
 	let srcBook = 'images/book.png';
-	let srcOwl = "images/owl-logo.png"
+	let srcOwl = 'images/owl-logo.png';
 
 	let books: Book[] = [];
 
 	const listRef = ref(storage, 'recordings');
 
-	let areStoriesLoading:boolean = true;
+	let areStoriesLoading: boolean = true;
 
 	const getBooks = async () => {
 		areStoriesLoading = true;
@@ -46,7 +46,7 @@
 <ul>
 	<h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Our Bookshelf</h2>
 	{#if areStoriesLoading}
-		<div class="loader"><img class="w-12 m-auto mt-12" src = {srcOwl} alt="" /></div>
+		<div class="loader"><img class="m-auto mt-12 w-12" src={srcOwl} alt="" /></div>
 	{/if}
 
 	{#each books as book}
@@ -66,18 +66,16 @@
 </ul>
 
 <style>
- .loader {
-	animation: rotation 2s infinite linear;
- }
+	.loader {
+		animation: rotation 2s infinite linear;
+	}
 
- @keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(359deg);
-  }
-}
-
-
+	@keyframes rotation {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(359deg);
+		}
+	}
 </style>
