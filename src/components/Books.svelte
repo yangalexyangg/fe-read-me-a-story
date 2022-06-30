@@ -10,13 +10,17 @@
 		artworkPath: string;
 		url: string;
 	}
-	let src = 'images/book.png';
+	let srcBook = 'images/book.png';
+	let srcOwl = 'images/owl-logo.png';
 
 	let books: Book[] = [];
 
 	const listRef = ref(storage, 'recordings');
 
+	let areStoriesLoading: boolean = true;
+
 	const getBooks = async () => {
+		areStoriesLoading = true;
 		let url: string;
 		const { items } = await listAll(listRef);
 		books = await Promise.all(
@@ -26,11 +30,12 @@
 						(metadata) => metadata.customMetadata.niceName || 'placeholder'
 					),
 					fileName: item.name,
-					artworkPath: src,
+					artworkPath: srcBook,
 					url: await getDownloadURL(ref(storage, item.fullPath))
 				};
 			})
 		);
+		areStoriesLoading = false;
 	};
 
 	onMount(() => {
@@ -40,6 +45,10 @@
 
 <ul>
 	<h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Our Bookshelf</h2>
+	{#if areStoriesLoading}
+		<div class="loader"><img class="m-auto mt-12 w-12" src={srcOwl} alt="" /></div>
+	{/if}
+
 	{#each books as book}
 		<li
 			class="m-auto mb-5 mt-5 max-w-xs rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center"
@@ -56,4 +65,17 @@
 	{/each}
 </ul>
 
-<style></style>
+<style>
+	.loader {
+		animation: rotation 2s infinite linear;
+	}
+
+	@keyframes rotation {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(359deg);
+		}
+	}
+</style>
