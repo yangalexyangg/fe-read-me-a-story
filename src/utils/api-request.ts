@@ -11,3 +11,17 @@ export const fetchStories = () => {
 export const postStory = (story: any) => {
 	return apiCall.post('/stories', story);
 };
+
+export const fetchUserStatus = (email: string) => {
+	return Promise.resolve('not found');
+};
+
+export const createNewuserAndFamily = (
+	email: string,
+	fullName: string,
+	displayName: string,
+	password: string,
+	familyName: string
+) => {
+	return Promise.resolve('user and family created');
+};
