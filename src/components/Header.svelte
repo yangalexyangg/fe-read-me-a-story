@@ -4,7 +4,7 @@
 </script>
 
 <header>
-	<Nav/>
+	<Nav />
 	<a href="/">
 		<div class="mb-6 flex items-center p-4">
 			<img class="w-3/12" {src} alt="owly" />
