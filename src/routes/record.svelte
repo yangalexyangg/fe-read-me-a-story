@@ -3,12 +3,11 @@
 	import FileUpload from '../components/FileUpload.svelte';
 	import Recording from '../components/Recording.svelte';
 
-	let recordingFile: Blob
+	let recordingFile: Blob;
 </script>
 
 <Header />
 
-<h2 class="font-Josefin text-amber-100 text-4xl font-normal text-center">Record A Story</h2>
-<Recording bind:blob={recordingFile}/>
-<FileUpload recordingFile={recordingFile}/>
-
+<h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Record A Story</h2>
+<Recording bind:blob={recordingFile} />
+<FileUpload {recordingFile} />
