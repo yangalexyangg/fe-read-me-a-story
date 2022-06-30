@@ -3,13 +3,14 @@
 	import LogIn from '../components/LogIn.svelte';
 	import { page } from '$app/stores';
 
-	let userLoggedIn: boolean = false;
+	let loggedIn: boolean = false;
+
 </script>
 
 <Header />
 
-{#if !userLoggedIn}
-	<LogIn />
+{#if !loggedIn}
+	<LogIn bind:userLoggedIn = {loggedIn}/>
 {:else}
 	<ul class="text-center">
 		<li class="mb-11">
