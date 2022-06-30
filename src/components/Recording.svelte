@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { recordingIsDisabled, stopIsDisabled, uploadIsDisabled } from '../store';
+
 	let media: any[] = [];
-	let mediaRecorder: any = null;
-	export let blob: any;
+	let mediaRecorder: MediaRecorder;
+	export let blob: Blob;
+
 	onMount(async () => {
-		const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+		const stream: MediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 		mediaRecorder = new MediaRecorder(stream);
-		mediaRecorder.ondataavailable = (event: any) => media.push(event.data);
+		mediaRecorder.ondataavailable = (event: BlobEvent) => media.push(event.data);
 		mediaRecorder.onstop = function () {
-			const audio: any = document.querySelector('audio');
+			const audio: HTMLAudioElement | null = document.querySelector('audio');
 			blob = new Blob(media, { type: 'audio/ogg; codecs=opus' });
 			media = [];
 			audio.src = window.URL.createObjectURL(blob);
