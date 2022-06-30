@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { recordingIsDisabled, stopIsDisabled, uploadIsDisabled } from '../store';
+	import { recordingIsDisabled, stopIsDisabled, uploadIsDisabled, resetIsDisabled } from '../store';
 
 	let media: any[] = [];
 	let mediaRecorder: MediaRecorder;
 	let url: string = '';
-	let blob: Blob;
+	export let blob: Blob;
 
 	onMount(async () => {
 		const stream: MediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -25,11 +25,13 @@
 	function startRecording() {
 		mediaRecorder.start();
 		$recordingIsDisabled = true;
+		$resetIsDisabled = true;
 	}
 
 	function stopRecording() {
 		mediaRecorder.stop();
 		$stopIsDisabled = true;
+		$resetIsDisabled = false;
 		uploadIsDisabled.set(true);
 	}
 
@@ -47,7 +49,8 @@
 		}
 		$recordingIsDisabled = false;
 		$stopIsDisabled = false;
-		uploadIsDisabled.set(false);
+		$uploadIsDisabled = false;
+		$resetIsDisabled = true;
 	};
 </script>
 
@@ -67,9 +70,9 @@
 			: 'bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4'}>Stop</button
 	>
 	<button
-		disabled={!$stopIsDisabled}
+		disabled={$resetIsDisabled}
 		on:click={resetRecording}
-		class={!$stopIsDisabled
+		class={$resetIsDisabled
 			? 'bg-slate-400 px-3 py-1 rounded mx-1.5 my-4'
 			: 'bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4'}>Reset</button
 	>

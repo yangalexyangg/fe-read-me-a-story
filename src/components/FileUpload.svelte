@@ -2,7 +2,7 @@
 	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
 
-	import { recordingIsDisabled, stopIsDisabled, uploadIsDisabled } from '../store';
+	import { recordingIsDisabled, stopIsDisabled, uploadIsDisabled, resetIsDisabled } from '../store';
 	import { onMount } from 'svelte';
 
 	export let recordingFile: Blob;
@@ -29,6 +29,7 @@
 	};
 
 	const uploadFile = () => {
+		$resetIsDisabled = true;
 		isUploading = true;
 		const uploadTask = uploadBytesResumable(recordingRef, recordingFile, metadata);
 
@@ -65,7 +66,9 @@
 		uploadIsDisabled.set(false);
 		isUploading = false;
 		fileUploaded = false;
+		progress = 0;
 		metadata.customMetadata.niceName = '';
+		$resetIsDisabled = true;
 	};
 </script>
 
