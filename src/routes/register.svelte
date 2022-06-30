@@ -3,7 +3,6 @@
 
 	import Header from '../components/Header.svelte';
 	import LogIn from '../components/LogIn.svelte';
-	import Logout from './logout.svelte';
 
 	let isExistingUser: boolean = false;
 	let isNewUser: boolean = false;
@@ -50,7 +49,7 @@
 			family.familyName
 		);
 		if (userAndFamily === 'user and family created') {
-			console.log('is this right?');
+			console.log('is this right? it is not');
 			accountCreated = true;
 			isNewUser = false;
 		}
