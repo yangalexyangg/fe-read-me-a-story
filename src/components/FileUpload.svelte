@@ -2,6 +2,7 @@
 	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
 
+	import { get } from 'svelte/store';
 	import { recordingIsDisabled, stopIsDisabled, uploadIsDisabled, resetIsDisabled } from '../store';
 	import { onMount } from 'svelte';
 	import { postStory } from '../utils/api-request';
@@ -27,8 +28,8 @@
 
 	let newStory = {
 		title: '',
-		userId: $userId,
-		familyId: $familyId,
+		userId: get(userId),
+		familyId: get(familyId),
 		chapterSource: recordingRef.fullPath
 	};
 
