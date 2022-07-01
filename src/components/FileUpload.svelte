@@ -27,8 +27,8 @@
 
 	let newStory = {
 		title: '',
-		$userId,
-		$familyId,
+		userId: $userId,
+		familyId: $familyId,
 		chapterSource: recordingRef.fullPath
 	};
 
