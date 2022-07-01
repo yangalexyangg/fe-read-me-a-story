@@ -1,8 +1,11 @@
 <script lang="ts">
+	import { inviteUser } from '../utils/api-request';
+
 	let email: string = '';
 
 	const handleSubmit = async () => {
-		console.log(email);
+		const { uid } = await inviteUser(email, familyId);
+		console.log(uid);
 	};
 </script>
 

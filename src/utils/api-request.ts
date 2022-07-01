@@ -47,3 +47,13 @@ export const createNewUserAndFamily = async (
 		return Promise.reject();
 	}
 };
+
+export const inviteUser = async (email: string, familyId: string) => {
+	// POST to /users
+	// should create a new user and store the family id + store the user in the families object
+
+	// temporary return
+	return Promise.resolve({
+		uid: 'e444445d-8de0-42d6-83ce-10ae5efa04f3'
+	});
+};
