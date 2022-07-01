@@ -1,6 +1,8 @@
 <script lang="ts">
+	let email: string = '';
+
 	const handleSubmit = async () => {
-		console.log('inviting...');
+		console.log(email);
 	};
 </script>
 
@@ -8,6 +10,6 @@
 
 <form on:submit|preventDefault={handleSubmit}>
 	<label for="email">Enter email</label>
-	<input type="email" id="email" required />
+	<input bind:value={email} type="email" id="email" required />
 	<button type="submit">Invite!</button>
 </form>
