@@ -6,3 +6,4 @@ export const uploadIsDisabled = writable(false);
 export const resetIsDisabled = writable(true);
 
 export const userId = writable('');
+export const familyId = writable('');
