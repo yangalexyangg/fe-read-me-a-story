@@ -28,7 +28,8 @@ export const createNewUserAndFamily = async (
 	fullName: string,
 	displayName: string,
 	password: string,
-	familyName: string
+	familyName: string,
+	userId: string
 ) => {
 	// fullname etc needed for database
 	try {
@@ -40,7 +41,8 @@ export const createNewUserAndFamily = async (
 		);
 		// example of returned object, replace with API response
 		return Promise.resolve({
-			uid: email,
+			uid: userCredential.user.uid,
+			// placeholder
 			fid: '960d1c6b-fc65-484b-99b3-9dc66914bae5'
 		});
 	} catch (error) {

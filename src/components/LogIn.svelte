@@ -23,7 +23,8 @@
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
 			userLoggedIn = true;
-			userId.set(credential.email);
+			userId.set(user.uid);
+			//todo: get family id for a user
 			familyId.set('placeholder_fam_id');
 		} else {
 			userLoggedIn = false;
