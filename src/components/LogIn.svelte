@@ -5,6 +5,8 @@
 		type UserCredential
 	} from 'firebase/auth';
 	import { auth } from '../utils/admin';
+
+	import { page } from '$app/stores';
 	import { familyId, userId } from '../store';
 
 	export let userLoggedIn: boolean = false;
@@ -67,3 +69,10 @@
 		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2">Log in</button>
 	</form>
 </div>
+
+<a
+	class:active={$page.url.pathname === `/register`}
+	sveltekit:prefetch
+	href={`/register`}
+	class="text-amber-100 underline decoration-solid decoration-2 underline-offset-4">Register?</a
+>
