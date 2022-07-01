@@ -47,9 +47,9 @@
 
 <div class="flex justify-center">
 	<form on:submit|preventDefault={handleSubmit} class="text-2xl">
-		<label for="username" class="block text-amber-100">Username:</label>
+		<label for="username" class="block text-amber-100">Email:</label>
 		<input
-			type="text"
+			type="email"
 			id="username"
 			bind:value={credential.username}
 			required
