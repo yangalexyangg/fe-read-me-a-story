@@ -40,7 +40,7 @@ export const createNewUserAndFamily = async (
 		);
 		// example of returned object, replace with API response
 		return Promise.resolve({
-			uid: 'e444445d-8de0-42d6-83ce-10ae5efa04f3',
+			uid: email,
 			fid: '960d1c6b-fc65-484b-99b3-9dc66914bae5'
 		});
 	} catch (error) {
@@ -57,6 +57,6 @@ export const inviteUser = async (email: string, familyId: string) => {
 
 	// temporary return
 	return Promise.resolve({
-		uid: 'e444445d-8de0-42d6-83ce-10ae5efa04f3'
+		uid: email
 	});
 };
