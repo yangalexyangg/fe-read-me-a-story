@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createNewUserAndFamily, fetchUserStatus } from '../utils/api-request';
 	import { page } from '$app/stores';
+	import { userId, familyId } from '../store';
 
 	import Header from '../components/Header.svelte';
 
@@ -51,7 +52,8 @@
 			accountCreated = true;
 			isNewUser = false;
 
-			// TODO: save uid and fid in store when needed
+			userId.set(uid);
+			familyId.set(fid);
 		} catch (error) {
 			console.error(error);
 		}
