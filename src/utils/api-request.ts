@@ -14,7 +14,9 @@ export const fetchStories = () => {
 };
 
 export const postStory = (story: any) => {
-	return apiCall.post('/stories', story);
+	return apiCall.post('/stories', story).then((res) => {
+		return res.data;
+	});
 };
 
 export const fetchUserStatus = (email: string) => {
@@ -28,17 +30,20 @@ export const createNewUserAndFamily = async (
 	password: string,
 	familyName: string
 ) => {
-	// fullname etc needed for database
 	try {
-		// this will be replaced with POST to api, sending passing email, password, fullName, displayName and familyName
+		//create the user in firebase AUTH
 		const userCredential: UserCredential = await createUserWithEmailAndPassword(
 			auth,
 			email,
 			password
 		);
+
+		// TODO: create a record for the user, with all the details, in firebase DB
+		const userIdToPassToDbIs = userCredential.user.uid;
 		// example of returned object, replace with API response
 		return Promise.resolve({
-			uid: 'e444445d-8de0-42d6-83ce-10ae5efa04f3',
+			uid: userCredential.user.uid,
+			// placeholder - create automagically for now
 			fid: '960d1c6b-fc65-484b-99b3-9dc66914bae5'
 		});
 	} catch (error) {
@@ -55,6 +60,6 @@ export const inviteUser = async (email: string, familyId: string) => {
 
 	// temporary return
 	return Promise.resolve({
-		uid: 'e444445d-8de0-42d6-83ce-10ae5efa04f3'
+		uid: email
 	});
 };

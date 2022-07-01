@@ -5,26 +5,31 @@
 		type UserCredential
 	} from 'firebase/auth';
 	import { auth } from '../utils/admin';
-	import { userId } from '../store';
+	import { familyId, userId } from '../store';
 
 	export let userLoggedIn: boolean = false;
 	let src: string = 'images/owl-logo.png';
 
 	interface Credential {
-		username: string;
+		email: string;
 		password: string;
 	}
 
 	const credential: Credential = {
-		username: '',
+		email: '',
 		password: ''
 	};
 
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
 			userLoggedIn = true;
+			userId.set(user.uid);
+			//todo: get family id for a user
+			familyId.set('placeholder_fam_id');
 		} else {
 			userLoggedIn = false;
+			userId.set('');
+			familyId.set('');
 		}
 	});
 
@@ -32,10 +37,9 @@
 		try {
 			const userCredential: UserCredential = await signInWithEmailAndPassword(
 				auth,
-				credential.username,
+				credential.email,
 				credential.password
 			);
-			$userId = userCredential.user.uid;
 		} catch (error) {
 			console.error(error);
 		}
@@ -48,7 +52,7 @@
 		<input
 			type="email"
 			id="username"
-			bind:value={credential.username}
+			bind:value={credential.email}
 			required
 			class="mb-4 rounded bg-amber-100 p-2"
 		/><br />
