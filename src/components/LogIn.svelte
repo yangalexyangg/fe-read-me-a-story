@@ -11,12 +11,12 @@
 	let src: string = 'images/owl-logo.png';
 
 	interface Credential {
-		username: string;
+		email: string;
 		password: string;
 	}
 
 	const credential: Credential = {
-		username: '',
+		email: '',
 		password: ''
 	};
 
@@ -32,10 +32,10 @@
 		try {
 			const userCredential: UserCredential = await signInWithEmailAndPassword(
 				auth,
-				credential.username,
+				credential.email,
 				credential.password
 			);
-			$userId = userCredential.user.uid;
+			$userId = credential.email;
 		} catch (error) {
 			console.error(error);
 		}
@@ -48,7 +48,7 @@
 		<input
 			type="email"
 			id="username"
-			bind:value={credential.username}
+			bind:value={credential.email}
 			required
 			class="mb-4 rounded bg-amber-100 p-2"
 		/><br />
