@@ -28,21 +28,22 @@ export const createNewUserAndFamily = async (
 	fullName: string,
 	displayName: string,
 	password: string,
-	familyName: string,
-	userId: string
+	familyName: string
 ) => {
-	// fullname etc needed for database
 	try {
-		// this will be replaced with POST to api, sending passing email, password, fullName, displayName and familyName
+		//create the user in firebase AUTH
 		const userCredential: UserCredential = await createUserWithEmailAndPassword(
 			auth,
 			email,
 			password
 		);
+
+		// TODO: create a record for the user, with all the details, in firebase DB
+		const userIdToPassToDbIs = userCredential.user.uid;
 		// example of returned object, replace with API response
 		return Promise.resolve({
 			uid: userCredential.user.uid,
-			// placeholder
+			// placeholder - create automagically for now
 			fid: '960d1c6b-fc65-484b-99b3-9dc66914bae5'
 		});
 	} catch (error) {
