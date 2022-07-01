@@ -14,7 +14,9 @@ export const fetchStories = () => {
 };
 
 export const postStory = (story: any) => {
-	return apiCall.post('/stories', story);
+	return apiCall.post('/stories', story).then((res) => {
+		return res.data;
+	});
 };
 
 export const fetchUserStatus = (email: string) => {
