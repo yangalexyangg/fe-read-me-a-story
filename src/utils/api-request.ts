@@ -49,6 +49,7 @@ export const createNewUserAndFamily = async (
 };
 
 export const inviteUser = async (email: string, familyId: string) => {
+	// may need to check if user has already been invited(?)
 	// POST to /users
 	// should create a new user and store the family id + store the user in the families object
 
