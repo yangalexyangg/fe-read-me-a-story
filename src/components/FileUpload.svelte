@@ -2,8 +2,12 @@
 	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
 
+	import { get } from 'svelte/store';
 	import { recordingIsDisabled, stopIsDisabled, uploadIsDisabled, resetIsDisabled } from '../store';
 	import { onMount } from 'svelte';
+	import { postStory } from '../utils/api-request';
+
+	import { userId, familyId } from '../store';
 
 	export let recordingFile: Blob;
 	let fileUploaded: boolean = false;
@@ -22,16 +26,17 @@
 	// Date.now() is temp workaround to create unique(ish) filenames and prevent overwriting
 	const recordingRef = ref(storage, `recordings/recording-${Date.now()}.ogg`);
 
-	// TODO: convert to interface?
-	const metadata = {
-		// using customMetadata as a temporary way to store human-readable name from form
-		customMetadata: { niceName: '' }
+	let newStory = {
+		title: '',
+		userId: $userId,
+		familyId: $familyId,
+		chapterSource: recordingRef.toString()
 	};
 
 	const uploadFile = () => {
 		$resetIsDisabled = true;
 		isUploading = true;
-		const uploadTask = uploadBytesResumable(recordingRef, recordingFile, metadata);
+		const uploadTask = uploadBytesResumable(recordingRef, recordingFile);
 
 		uploadTask.on(
 			'state_changed',
@@ -56,6 +61,9 @@
 							'We are currently experiencing some technical issues. Please try again later.';
 						break;
 				}
+			},
+			() => {
+				postStory(newStory);
 			}
 		);
 	};
@@ -67,7 +75,8 @@
 		isUploading = false;
 		fileUploaded = false;
 		progress = 0;
-		metadata.customMetadata.niceName = '';
+		newStory.title = '';
+		newStory.chapterSource = '';
 		$resetIsDisabled = true;
 	};
 </script>
@@ -81,7 +90,7 @@
 				class="text-[#000000]"
 				type="text"
 				required
-				bind:value={metadata.customMetadata.niceName}
+				bind:value={newStory.title}
 			/></label
 		>
 	</form>
