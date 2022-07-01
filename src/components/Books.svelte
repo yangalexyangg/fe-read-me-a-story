@@ -3,6 +3,8 @@
 	import { storage } from '../utils/admin';
 	import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
 	import { page } from '$app/stores';
+	import { fetchStories } from '../utils/api-request';
+	import { familyId } from '../store';
 
 	interface Book {
 		fileName: string;
@@ -21,21 +23,27 @@
 
 	const getBooks = async () => {
 		areStoriesLoading = true;
-		let url: string;
-		const { items } = await listAll(listRef);
-		books = await Promise.all(
-			items.map(async (item) => {
-				return {
-					title: await getMetadata(ref(storage, item.fullPath)).then(
-						(metadata) => metadata.customMetadata.niceName || 'placeholder'
-					),
-					fileName: item.name,
-					artworkPath: srcBook,
-					url: await getDownloadURL(ref(storage, item.fullPath))
-				};
-			})
-		);
-		areStoriesLoading = false;
+		try {
+			const books = await fetchStories($familyId);
+			areStoriesLoading = false;
+		} catch (error) {
+			console.error(error);
+		}
+
+		// let url: string;
+		// const { items } = await listAll(listRef);
+		// books = await Promise.all(
+		// 	items.map(async (item) => {
+		// 		return {
+		// 			title: await getMetadata(ref(storage, item.fullPath)).then(
+		// 				(metadata) => metadata.customMetadata.niceName || 'placeholder'
+		// 			),
+		// 			fileName: item.name,
+		// 			artworkPath: srcBook,
+		// 			url: await getDownloadURL(ref(storage, item.fullPath))
+		// 		};
+		// 	})
+		// );
 	};
 
 	onMount(() => {
