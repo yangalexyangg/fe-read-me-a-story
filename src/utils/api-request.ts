@@ -30,14 +30,20 @@ export const createNewUserAndFamily = async (
 ) => {
 	// fullname etc needed for database
 	try {
+		// this will be replaced with POST to api, sending passing email, password, fullName, displayName and familyName
 		const userCredential: UserCredential = await createUserWithEmailAndPassword(
 			auth,
 			email,
 			password
 		);
-		// string will be replaced with object containing uid and fid
-		return Promise.resolve('user and family created');
+		// example of returned object, replace with API response
+		return Promise.resolve({
+			uid: 'e444445d-8de0-42d6-83ce-10ae5efa04f3',
+			fid: '960d1c6b-fc65-484b-99b3-9dc66914bae5'
+		});
 	} catch (error) {
-		return Promise.reject('Unable to create account');
+		console.error(error);
+		// temp rejecting until api endpoint is available (ask andy if this doesn't make sense)
+		return Promise.reject();
 	}
 };

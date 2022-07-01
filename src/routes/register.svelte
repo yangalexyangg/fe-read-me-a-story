@@ -41,7 +41,7 @@
 	const handleRegister = async () => {
 		//call to faked api call in api-requests
 		try {
-			const userAndFamily = await createNewUserAndFamily(
+			const { uid, fid } = await createNewUserAndFamily(
 				user.email,
 				user.fullName,
 				user.displayName,
@@ -50,6 +50,8 @@
 			);
 			accountCreated = true;
 			isNewUser = false;
+
+			// TODO: save uid and fid in store when needed
 		} catch (error) {
 			console.error(error);
 		}
