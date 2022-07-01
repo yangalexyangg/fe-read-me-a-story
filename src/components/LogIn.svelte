@@ -5,7 +5,7 @@
 		type UserCredential
 	} from 'firebase/auth';
 	import { auth } from '../utils/admin';
-	import { userId } from '../store';
+	import { familyId, userId } from '../store';
 
 	export let userLoggedIn: boolean = false;
 	let src: string = 'images/owl-logo.png';
@@ -23,8 +23,12 @@
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
 			userLoggedIn = true;
+			userId.set(credential.email);
+			familyId.set('placeholder_fam_id');
 		} else {
 			userLoggedIn = false;
+			userId.set('');
+			familyId.set('');
 		}
 	});
 
@@ -35,7 +39,6 @@
 				credential.email,
 				credential.password
 			);
-			$userId = credential.email;
 		} catch (error) {
 			console.error(error);
 		}

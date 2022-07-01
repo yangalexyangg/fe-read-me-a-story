@@ -28,9 +28,9 @@
 
 	let newStory = {
 		title: '',
-		userId: get(userId),
-		familyId: get(familyId),
-		chapterSource: recordingRef.fullPath
+		userId: $userId,
+		familyId: $familyId,
+		chapterSource: recordingRef.toString()
 	};
 
 	const uploadFile = () => {
