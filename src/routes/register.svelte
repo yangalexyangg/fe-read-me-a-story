@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { createNewUserAndFamily, fetchUserStatus } from '../utils/api-request';
+	import { page } from '$app/stores';
 
 	import Header from '../components/Header.svelte';
-	import LogIn from '../components/LogIn.svelte';
 
 	let isExistingUser: boolean = false;
 	let isNewUser: boolean = false;
@@ -39,19 +39,19 @@
 	};
 
 	const handleRegister = async () => {
-		console.log('registering baby!');
 		//call to faked api call in api-requests
-		const userAndFamily = await createNewUserAndFamily(
-			user.email,
-			user.fullName,
-			user.displayName,
-			user.password,
-			family.familyName
-		);
-		if (userAndFamily === 'user and family created') {
-			console.log('is this right? it is not');
+		try {
+			const userAndFamily = await createNewUserAndFamily(
+				user.email,
+				user.fullName,
+				user.displayName,
+				user.password,
+				family.familyName
+			);
 			accountCreated = true;
 			isNewUser = false;
+		} catch (error) {
+			console.error(error);
 		}
 	};
 </script>
@@ -59,8 +59,14 @@
 <Header />
 
 {#if accountCreated}
-	<h2>Account created, please login!</h2>
-	<LogIn />
+	<h2>Your account has been created and you have been logged in!</h2>
+	<a
+		class:active={$page.url.pathname === '/'}
+		sveltekit:prefetch
+		href="/"
+		class="underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4"
+		><p class="text-center font-Josefin font-normal text-amber-100">Go to homepage</p></a
+	>
 {/if}
 
 {#if !accountCreated && !isExistingUser && !isNewUser}
@@ -80,7 +86,7 @@
 	</div>
 {:else if isNewUser}
 	<p class="text-amber-100">Please fill in these details to create a new account</p>
-	<form on:submit={handleRegister}>
+	<form on:submit|preventDefault={handleRegister}>
 		<label for="fullName">Full name</label><br />
 		<input
 			bind:value={user.fullName}

@@ -35,10 +35,9 @@ export const createNewUserAndFamily = async (
 			email,
 			password
 		);
-		console.log('user created!');
+		// string will be replaced with object containing uid and fid
+		return Promise.resolve('user and family created');
 	} catch (error) {
-		console.error(error);
+		return Promise.reject('Unable to create account');
 	}
-	// should send user id and family id back eventually
-	return Promise.resolve('user and family created');
 };
