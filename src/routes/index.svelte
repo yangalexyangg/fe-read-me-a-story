@@ -2,11 +2,13 @@
 	import Header from '../components/Header.svelte';
 	import LogIn from '../components/LogIn.svelte';
 	import { page } from '$app/stores';
+	import LoginHeader from '../components/LoginHeader.svelte';
 
 	let loggedIn: boolean = false;
 </script>
 
 {#if !loggedIn}
+	<LoginHeader />
 	<LogIn bind:userLoggedIn={loggedIn} />
 {:else}
 	<Header />
