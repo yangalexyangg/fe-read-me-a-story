@@ -73,20 +73,22 @@
 			href={`/record`}
 			class="underline decoration-solid decoration-2 underline-offset-4">Record a story</a
 		>
-		</p>
-	{:else}
+	</p>
+{:else}
 	<ul>
-	{#each books as book}
-		<li class="m-auto mb-5 mt-5 max-w-xs rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center">
-			<h2 class="text-xl">{book.title}</h2>
-			<img src={book.artworkPath} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
-			<a
-				class:active={$page.url.pathname === `/${book.storyId}`}
-				sveltekit:prefetch
-				href={`/${book.storyId}`}
-				class="underline decoration-solid decoration-2 underline-offset-4">Listen to story</a
+		{#each books as book}
+			<li
+				class="m-auto mb-5 mt-5 max-w-xs rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center"
 			>
-		</li>
+				<h2 class="text-xl">{book.title}</h2>
+				<img src={book.artworkPath} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
+				<a
+					class:active={$page.url.pathname === `/${book.storyId}`}
+					sveltekit:prefetch
+					href={`/${book.storyId}`}
+					class="underline decoration-solid decoration-2 underline-offset-4">Listen to story</a
+				>
+			</li>
 		{/each}
 	</ul>
 {/if}
