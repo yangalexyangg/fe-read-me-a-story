@@ -31,21 +31,34 @@ export const createNewUserAndFamily = async (
 	familyName: string
 ) => {
 	try {
-		//create the user in firebase AUTH
+		//create user directly in Firebase database
 		const userCredential: UserCredential = await createUserWithEmailAndPassword(
 			auth,
 			email,
 			password
 		);
 
-		// TODO: create a record for the user, with all the details, in firebase DB
-		const userIdToPassToDbIs = userCredential.user.uid;
-		// example of returned object, replace with API response
-		return Promise.resolve({
-			uid: userCredential.user.uid,
-			// placeholder - create automagically for now
-			fid: '960d1c6b-fc65-484b-99b3-9dc66914bae5'
-		});
+		// save user data via python api to Firebase database
+		interface User {
+			email:string,
+			fullName: string,
+			displayName: string,
+			familyName: string,
+			userId: string,
+		}
+
+		const user:User = {
+			email: email,
+			fullName: fullName,
+			displayName: displayName,
+			familyName: familyName,
+			userId: userCredential.user.uid
+		}
+
+		const postUserToDatabase = await apiCall.post('/users', user )
+		
+		return postUserToDatabase.data.family_id;
+
 	} catch (error) {
 		console.error(error);
 		// temp rejecting until api endpoint is available (ask andy if this doesn't make sense)
