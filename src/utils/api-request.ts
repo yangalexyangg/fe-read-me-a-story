@@ -1,14 +1,13 @@
-// temp imports for testing front end, replace with python!
 import { createUserWithEmailAndPassword, type UserCredential } from 'firebase/auth';
 import { auth } from './admin';
-// end of temp imports
 
 import axios from 'axios';
 
 const apiCall = axios.create({ baseURL: 'http://127.0.0.1:5000' });
 
-export const fetchStories = () => {
-	return apiCall.get('/stories').then((res) => {
+export const fetchStories = (familyId: string) => {
+	
+	return apiCall.get(`/stories/${familyId}`).then((res) => {
 		return res.data;
 	});
 };
