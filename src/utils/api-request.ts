@@ -12,6 +12,10 @@ export const fetchStories = (familyId: string) => {
 	});
 };
 
+export const fetchStory = (familyId: string, storyTitle: string) => {
+	return apiCall.get(`/stories/${familyId}/${storyTitle}`).then((res) => res.data)
+}
+
 export const postStory = (story: any) => {
 	return apiCall.post('/stories', story).then((res) => {
 		return res.data;
