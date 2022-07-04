@@ -5,10 +5,11 @@
 
 	import Header from '../components/Header.svelte';
 
-	let isExistingUser: boolean = false;
+	let isInvitedUser: boolean = false;
 	let isNewUser: boolean = false;
 	let accountCreated: boolean = false;
 	let error: boolean = false;
+	let isAlreadyRegistered: boolean = false;
 
 	interface Family {
 		familyName: string;
@@ -35,12 +36,21 @@
 	const handleSubmit = async () => {
 		const status = await fetchUserStatus(user.email);
 
-		if (status === 'not found') {
+		if (status === 'new user') {
 			isNewUser = true;
+		}
+
+		if (status === 'registered') {
+			isAlreadyRegistered = true;
+		}
+
+		if (status === 'invited') {
+			isInvitedUser = true;
 		}
 	};
 
 	const handleRegister = async () => {
+		//needs updating on the basis of backend patch request
 		try {
 			const response = await createNewUserAndFamily(
 				user.email,
@@ -59,6 +69,19 @@
 </script>
 
 <Header />
+
+{#if isAlreadyRegistered}
+	<p class="text-center font-Josefin text-4xl font-normal text-amber-100">
+		You are already registered
+	</p>
+	<a
+		class:active={$page.url.pathname === '/'}
+		sveltekit:prefetch
+		href="/"
+		class="underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4"
+		><p class="text-center font-Josefin font-normal text-amber-100">Log in</p></a
+	>
+{/if}
 
 {#if error}
 	<p class="text-center font-Josefin text-4xl font-normal text-amber-100">
@@ -86,7 +109,7 @@
 	>
 {/if}
 
-{#if !accountCreated && !isExistingUser && !isNewUser}
+{#if !accountCreated && !isInvitedUser && !isNewUser && !isAlreadyRegistered}
 	<h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Register</h2>
 
 	<form on:submit|preventDefault={handleSubmit} class="m-auto pt-4 text-center">
@@ -99,10 +122,17 @@
 		/>
 		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2">Register</button>
 	</form>
-{:else if isNewUser}
-	<p class="mx-1 text-center text-amber-100">
-		Please fill in these details to create a new account
-	</p>
+{:else if isNewUser || isInvitedUser}
+	{#if isInvitedUser}
+		<p class="mx-1 text-center text-amber-100">
+			You've been invited by your family! Please fill in these details to create your account.
+		</p>
+	{/if}
+
+	{#if isNewUser}
+		<p class="mx-1 text-center text-amber-100">Please fill in these details to create an account</p>
+	{/if}
+
 	<form on:submit|preventDefault={handleRegister} class="m-auto pt-4 text-center">
 		<label for="fullName" class="text-amber-100">Full name</label><br />
 		<input
@@ -119,14 +149,18 @@
 			class="mb-4 rounded bg-amber-100 p-2"
 			required
 		/><br />
-		<label for="familyName" class="text-amber-100">Your family's name</label><br />
-		<input
-			bind:value={family.familyName}
-			type="text"
-			placeholder="Hamilton Family"
-			class="mb-4 rounded bg-amber-100 p-2"
-			required
-		/><br />
+
+		{#if isNewUser}
+			<label for="familyName" class="text-amber-100">Your family's name</label><br />
+			<input
+				bind:value={family.familyName}
+				type="text"
+				placeholder="Hamilton Family"
+				class="mb-4 rounded bg-amber-100 p-2"
+				required
+			/><br />
+		{/if}
+
 		<label for="password" class="text-amber-100">Password</label><br />
 		<input bind:value={user.password} type="password" class="mb-4 rounded bg-amber-100 p-2" /><br />
 		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2 text-black">Register</button>
