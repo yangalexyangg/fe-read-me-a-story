@@ -6,15 +6,16 @@ import axios from 'axios';
 const apiCall = axios.create({ baseURL: 'http://127.0.0.1:5000' });
 
 export const fetchStories = (familyId: string) => {
-	
 	return apiCall.get(`/stories/${familyId}`).then((res) => {
 		return res.data;
 	});
 };
 
-export const fetchStory = (familyId: string, storyTitle: string) => {
-	return apiCall.get(`/stories/${familyId}/${storyTitle}`).then((res) => res.data)
-}
+export const fetchStory = (familyId: string, storyId: string) => {
+	return apiCall.get(`/stories/${familyId}/${storyId}`).then((res) => {
+		return res.data
+	})
+};
 
 export const postStory = (story: any) => {
 	return apiCall.post('/stories', story).then((res) => {

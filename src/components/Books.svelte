@@ -9,6 +9,7 @@
 		title: string;
 		artworkPath: string;
 		url: string;
+		storyId: string
 	}
 	let srcBook = 'images/book.png';
 	let srcOwl = 'images/owl-logo.png';
@@ -21,16 +22,17 @@
 		areStoriesLoading = true;
 		try {
 			const returnedBooks = await fetchStories($familyId);
-			
-			books = returnedBooks.map((bookItem) => {
 
+			books = returnedBooks.map((bookItem) => {
+				console.log();
+				
 				return {
+					storyId : Object.keys(bookItem)[0],
 					artworkPath: srcBook,
 					title: Object.values(bookItem)[0].title,
 					url: Object.values(bookItem)[0].chapters[0].chapter_src,
-					fileName: "Do we use this",
-				}
-			})
+				};
+			});
 			areStoriesLoading = false;
 		} catch (error) {
 			console.error(error);
@@ -55,9 +57,9 @@
 			<h2 class="text-xl">{book.title}</h2>
 			<img src={book.artworkPath} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
 			<a
-				class:active={$page.url.pathname === `/${book.title}`}
+				class:active={$page.url.pathname === `/${book.storyId}`}
 				sveltekit:prefetch
-				href={`/${book.title}`}
+				href={`/${book.storyId}`}
 				class="underline decoration-solid decoration-2 underline-offset-4">Listen to story</a
 			>
 		</li>

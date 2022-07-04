@@ -5,6 +5,6 @@
 </script>
 
 <Header />
-<Book bookTitle={$page.params.bookTitle} />
+<Book bookId={$page.params.bookId} />
 
 <style></style>
