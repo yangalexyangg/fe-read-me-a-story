@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { storage } from '../utils/admin';
-	import { ref, listAll, getDownloadURL, getMetadata } from 'firebase/storage';
 	import { page } from '$app/stores';
+	import { fetchStories } from '../utils/api-request';
+	import { familyId } from '../store';
 
 	interface Book {
 		fileName: string;
@@ -15,27 +15,26 @@
 
 	let books: Book[] = [];
 
-	const listRef = ref(storage, 'recordings');
-
 	let areStoriesLoading: boolean = true;
 
 	const getBooks = async () => {
 		areStoriesLoading = true;
-		let url: string;
-		const { items } = await listAll(listRef);
-		books = await Promise.all(
-			items.map(async (item) => {
+		try {
+			const returnedBooks = await fetchStories($familyId);
+			
+			books = returnedBooks.map((bookItem) => {
+
 				return {
-					title: await getMetadata(ref(storage, item.fullPath)).then(
-						(metadata) => metadata.customMetadata.niceName || 'placeholder'
-					),
-					fileName: item.name,
 					artworkPath: srcBook,
-					url: await getDownloadURL(ref(storage, item.fullPath))
-				};
+					title: Object.values(bookItem)[0].title,
+					url: Object.values(bookItem)[0].chapters[0].chapter_src,
+					fileName: "Do we use this",
+				}
 			})
-		);
-		areStoriesLoading = false;
+			areStoriesLoading = false;
+		} catch (error) {
+			console.error(error);
+		}
 	};
 
 	onMount(() => {
