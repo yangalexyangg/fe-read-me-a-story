@@ -39,8 +39,6 @@
 	const getBooks = async () => {
 		areStoriesLoading = true;
 		try {
-			console.log($familyId);
-
 			const returnedBooks = await fetchStories($familyId);
 			books = returnedBooks.map((bookItem: bookItem) => {
 				return {
@@ -63,7 +61,17 @@
 {#if areStoriesLoading}
 	<div class="loader"><img class="m-auto mt-12 w-12" src={srcOwl} alt="" /></div>
 {:else if books.length === 0}
-	<p>No books</p>
+	<p class="text-center text-amber-100">
+		Your family hasn't recorded any stories yet. Why not record one now?
+	</p>
+	<p class="text-center font-Josefin font-normal text-amber-100">
+		<a
+			class:active={$page.url.pathname === `/record`}
+			sveltekit:prefetch
+			href={`/record`}
+			class="underline decoration-solid decoration-2 underline-offset-4">Record a story</a
+		>
+	</p>
 {:else}
 	<ul>
 		{#each books as book}
