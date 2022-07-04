@@ -8,14 +8,22 @@
 	export let bookId: string;
 
 	let src = '../images/book.png';
-	let book = {
-		title: ''
-	};
+
+	interface Chapter {
+		chapter_src: string;
+	}
+	interface Book {
+		title: string;
+		chapters: Chapter[];
+	}
+
+	let book: Book;
+
 	$: chapterSource = '';
 	onMount(async () => {
 		book = await fetchStory(bookId);
 		chapterSource = await getDownloadURL(ref(storage, book.chapters[0].chapter_src));
-		let audio = document.getElementById('audio');
+		let audio = document.getElementById('audio') as HTMLAudioElement;
 		if (audio) {
 			audio.src = chapterSource;
 		}
