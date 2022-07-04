@@ -21,16 +21,15 @@
 		areStoriesLoading = true;
 		try {
 			const returnedBooks = await fetchStories($familyId);
-			
-			books = returnedBooks.map((bookItem) => {
 
+			books = returnedBooks.map((bookItem) => {
 				return {
 					artworkPath: srcBook,
 					title: Object.values(bookItem)[0].title,
 					url: Object.values(bookItem)[0].chapters[0].chapter_src,
-					fileName: "Do we use this",
-				}
-			})
+					fileName: 'Do we use this'
+				};
+			});
 			areStoriesLoading = false;
 		} catch (error) {
 			console.error(error);

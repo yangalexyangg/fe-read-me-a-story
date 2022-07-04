@@ -6,7 +6,6 @@ import axios from 'axios';
 const apiCall = axios.create({ baseURL: 'http://127.0.0.1:5000' });
 
 export const fetchStories = (familyId: string) => {
-	
 	return apiCall.get(`/stories/${familyId}`).then((res) => {
 		return res.data;
 	});
@@ -19,29 +18,27 @@ export const postStory = (story: any) => {
 };
 
 export const fetchUserStatus = async (email: string) => {
-	//this needs to return user id - and return family name 
-	let isInvited:boolean = false;
-	let familyId:string = "";
-	let userId:string = "";
+	//this needs to return user id - and return family name
+	let isInvited: boolean = false;
+	let familyId: string = '';
+	let userId: string = '';
 
 	try {
-		const {data} = await apiCall.get(`/users/email/${email}`)
-		userId = Object.keys(data)[0]
-		familyId = Object.keys(data[userId]["families"])[0]
-		isInvited = data[userId]["invited"]
-		if(isInvited){
-			return "invited"
+		const { data } = await apiCall.get(`/users/email/${email}`);
+		userId = Object.keys(data)[0];
+		familyId = Object.keys(data[userId]['families'])[0];
+		isInvited = data[userId]['invited'];
+		if (isInvited) {
+			return 'invited';
 		} else {
-			return "registered"
+			return 'registered';
 		}
-
-	} catch(error:any){
-		console.log("new user")
-		return "new user"
+	} catch (error: any) {
+		console.log('new user');
+		return 'new user';
 	}
 
 	//this will return status...
-	
 
 	// const checkUserStatus = await apiCall.get(`/users/${getUserId}`);
 	// return Promise.resolve('not found');

@@ -9,7 +9,7 @@
 	let isNewUser: boolean = false;
 	let accountCreated: boolean = false;
 	let error: boolean = false;
-	let isAlreadyRegistered:boolean = false;
+	let isAlreadyRegistered: boolean = false;
 
 	interface Family {
 		familyName: string;
@@ -40,16 +40,17 @@
 			isNewUser = true;
 		}
 
-		if(status === 'registered'){
+		if (status === 'registered') {
 			isAlreadyRegistered = true;
 		}
 
-		if(status === 'invited'){
+		if (status === 'invited') {
 			isInvitedUser = true;
 		}
 	};
 
 	const handleRegister = async () => {
+		//needs updating on the basis of backend patch request
 		try {
 			const response = await createNewUserAndFamily(
 				user.email,
@@ -71,7 +72,7 @@
 
 {#if isAlreadyRegistered}
 	<p class="text-center font-Josefin text-4xl font-normal text-amber-100">
-		You are already registered 
+		You are already registered
 	</p>
 	<a
 		class:active={$page.url.pathname === '/'}
@@ -123,15 +124,13 @@
 	</form>
 {:else if isNewUser || isInvitedUser}
 	{#if isInvitedUser}
-	<p class="mx-1 text-center text-amber-100">
-		You've been invited by your family! Please fill in these details to create your account. 
-	</p>
+		<p class="mx-1 text-center text-amber-100">
+			You've been invited by your family! Please fill in these details to create your account.
+		</p>
 	{/if}
 
 	{#if isNewUser}
-	<p class="mx-1 text-center text-amber-100">
-		Please fill in these details to create an account
-	</p>
+		<p class="mx-1 text-center text-amber-100">Please fill in these details to create an account</p>
 	{/if}
 
 	<form on:submit|preventDefault={handleRegister} class="m-auto pt-4 text-center">
@@ -152,16 +151,15 @@
 		/><br />
 
 		{#if isNewUser}
-		<label for="familyName" class="text-amber-100">Your family's name</label><br />
-		<input
-			bind:value={family.familyName}
-			type="text"
-			placeholder="Hamilton Family"
-			class="mb-4 rounded bg-amber-100 p-2"
-			required
-		/><br />
+			<label for="familyName" class="text-amber-100">Your family's name</label><br />
+			<input
+				bind:value={family.familyName}
+				type="text"
+				placeholder="Hamilton Family"
+				class="mb-4 rounded bg-amber-100 p-2"
+				required
+			/><br />
 		{/if}
-
 
 		<label for="password" class="text-amber-100">Password</label><br />
 		<input bind:value={user.password} type="password" class="mb-4 rounded bg-amber-100 p-2" /><br />
@@ -172,4 +170,3 @@
 <!-- {#if isInvitedUser}
 <p>You are invited</p>
 {/if} -->
-
