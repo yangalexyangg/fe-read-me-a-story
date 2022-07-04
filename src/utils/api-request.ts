@@ -30,17 +30,22 @@ export const fetchUserStatus = async (email: string) => {
 	let userId: string = '';
 
 	try {
-		const { data } = await apiCall.get(`/users/email/${email}`);
-		userId = Object.keys(data)[0];
-		familyId = Object.keys(data[userId]['families'])[0];
-		isInvited = data[userId]['invited'];
-		if (isInvited) {
-			return 'invited';
+		const response = await apiCall.get(`/users/email/${email}`);
+		if (response.status === 204) {
+			return 'new user';
 		} else {
-			return 'registered';
+			userId = Object.keys(response.data)[0];
+			console.log(response.data, 'here');
+			familyId = Object.keys(response.data[userId]['families'])[0];
+			isInvited = response.data[userId]['invited'];
+			if (isInvited) {
+				return 'invited';
+			} else {
+				return 'registered';
+			}
 		}
 	} catch (error: any) {
-		return 'new user';
+		return { message: 'An error has occured' };
 	}
 };
 
