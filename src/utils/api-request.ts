@@ -33,10 +33,9 @@ export const fetchUserStatus = async (email: string) => {
 		} else {
 			return 'registered';
 		}
-	} catch (error: any ) {
+	} catch (error: any) {
 		return 'new user';
 	}
-
 };
 
 export const createNewUserAndFamily = async (
