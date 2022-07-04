@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, type UserCredential } from 'firebase/auth';
 import { auth } from './admin';
-
+import { userId, familyId } from '../store';
 import axios from 'axios';
 
 const apiCall = axios.create({ baseURL: 'http://127.0.0.1:5000' });
@@ -18,8 +18,33 @@ export const postStory = (story: any) => {
 	});
 };
 
-export const fetchUserStatus = (email: string) => {
-	return Promise.resolve('not found');
+export const fetchUserStatus = async (email: string) => {
+	//this needs to return user id - and return family name 
+	let isInvited:boolean = false;
+	let familyId:string = "";
+	let userId:string = "";
+
+	try {
+		const {data} = await apiCall.get(`/users/email/${email}`)
+		userId = Object.keys(data)[0]
+		familyId = Object.keys(data[userId]["families"])[0]
+		isInvited = data[userId]["invited"]
+		if(isInvited){
+			return "invited"
+		} else {
+			return "registered"
+		}
+
+	} catch(error:any){
+		console.log("new user")
+		return "new user"
+	}
+
+	//this will return status...
+	
+
+	// const checkUserStatus = await apiCall.get(`/users/${getUserId}`);
+	// return Promise.resolve('not found');
 };
 
 export const createNewUserAndFamily = async (
