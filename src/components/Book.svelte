@@ -13,7 +13,7 @@
 	};
 	$: chapterSource = '';
 	onMount(async () => {
-		book = await fetchStory($familyId, bookId);
+		book = await fetchStory(bookId);
 		chapterSource = await getDownloadURL(ref(storage, book.chapters[0].chapter_src));
 		let audio = document.getElementById('audio');
 		if (audio) {
@@ -21,6 +21,7 @@
 		}
 	});
 </script>
+
 <svelte:head>
 	<title>{book.title}</title>
 </svelte:head>
