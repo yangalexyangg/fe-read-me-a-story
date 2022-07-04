@@ -17,7 +17,10 @@
 		chapters: Chapter[];
 	}
 
-	let book: Book;
+	let book: Book = {
+		title: '',
+		chapters: [{ chapter_src: '' }]
+	};
 
 	$: chapterSource = '';
 	onMount(async () => {
@@ -33,6 +36,7 @@
 <svelte:head>
 	<title>{book.title}</title>
 </svelte:head>
+
 <h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">{book.title}</h2>
 <img {src} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
 <audio controls class="m-auto mt-10" src={chapterSource} />
