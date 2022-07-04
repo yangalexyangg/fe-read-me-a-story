@@ -1,6 +1,5 @@
 import { createUserWithEmailAndPassword, type UserCredential } from 'firebase/auth';
 import { auth } from './admin';
-import { userId, familyId } from '../store';
 import axios from 'axios';
 
 const apiCall = axios.create({ baseURL: 'http://127.0.0.1:5000' });
@@ -26,23 +25,18 @@ export const postStory = (story: any) => {
 export const fetchUserStatus = async (email: string) => {
 	//this needs to return user id - and return family name
 	let isInvited: boolean = false;
-	let familyId: string = '';
-	let userId: string = '';
+	let resFamilyId: string = '';
+	let resUserId: string = '';
 
 	try {
 		const response = await apiCall.get(`/users/email/${email}`);
 		if (response.status === 204) {
-			return 'new user';
+			return { new_user: 'new user' };
 		} else {
-			userId = Object.keys(response.data)[0];
-			console.log(response.data, 'here');
-			familyId = Object.keys(response.data[userId]['families'])[0];
-			isInvited = response.data[userId]['invited'];
-			if (isInvited) {
-				return 'invited';
-			} else {
-				return 'registered';
-			}
+			resUserId = Object.keys(response.data)[0];
+			resFamilyId = Object.keys(response.data[resUserId]['families'])[0];
+			isInvited = response.data[resUserId]['invited'];
+			return { resUserId, resFamilyId, isInvited };
 		}
 	} catch (error: any) {
 		return { message: 'An error has occured' };
