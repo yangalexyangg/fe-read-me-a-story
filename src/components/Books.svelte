@@ -9,7 +9,7 @@
 		title: string;
 		artworkPath: string;
 		url: string;
-		storyId: string
+		storyId: string;
 	}
 	let srcBook = 'images/book.png';
 	let srcOwl = 'images/owl-logo.png';
@@ -25,12 +25,12 @@
 
 			books = returnedBooks.map((bookItem) => {
 				console.log();
-				
+
 				return {
-					storyId : Object.keys(bookItem)[0],
+					storyId: Object.keys(bookItem)[0],
 					artworkPath: srcBook,
 					title: Object.values(bookItem)[0].title,
-					url: Object.values(bookItem)[0].chapters[0].chapter_src,
+					url: Object.values(bookItem)[0].chapters[0].chapter_src
 				};
 			});
 			areStoriesLoading = false;

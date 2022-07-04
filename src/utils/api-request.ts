@@ -13,8 +13,8 @@ export const fetchStories = (familyId: string) => {
 
 export const fetchStory = (familyId: string, storyId: string) => {
 	return apiCall.get(`/stories/${familyId}/${storyId}`).then((res) => {
-		return res.data
-	})
+		return res.data;
+	});
 };
 
 export const postStory = (story: any) => {
