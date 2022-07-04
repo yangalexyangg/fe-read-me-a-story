@@ -40,25 +40,24 @@ export const createNewUserAndFamily = async (
 
 		// save user data via python api to Firebase database
 		interface User {
-			email:string,
-			fullName: string,
-			displayName: string,
-			familyName: string,
-			userId: string,
+			email: string;
+			fullName: string;
+			displayName: string;
+			familyName: string;
+			userId: string;
 		}
 
-		const user:User = {
+		const user: User = {
 			email: email,
 			fullName: fullName,
 			displayName: displayName,
 			familyName: familyName,
 			userId: userCredential.user.uid
-		}
+		};
 
-		const postUserToDatabase = await apiCall.post('/users', user )
-		
+		const postUserToDatabase = await apiCall.post('/users', user);
+
 		return postUserToDatabase.data.family_id;
-
 	} catch (error) {
 		console.error(error);
 		// temp rejecting until api endpoint is available (ask andy if this doesn't make sense)

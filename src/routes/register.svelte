@@ -42,32 +42,41 @@
 
 	const handleRegister = async () => {
 		try {
-			const response = await createNewUserAndFamily(user.email, user.fullName, user.displayName, user.password, family.familyName)
+			const response = await createNewUserAndFamily(
+				user.email,
+				user.fullName,
+				user.displayName,
+				user.password,
+				family.familyName
+			);
 			accountCreated = true;
 			isNewUser = false;
-			familyId.set(response)
-		} catch (error){
+			familyId.set(response);
+		} catch (error) {
 			error = true;
 		}
-		
 	};
 </script>
 
 <Header />
 
-{#if error} 
-	<p class="text-center font-Josefin text-4xl font-normal text-amber-100">There was an error please try again</p>
-		<a
-			class:active={$page.url.pathname === '/register'}
-			sveltekit:prefetch
-			href="/register"
-			class="underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4"
-			><p class="text-center font-Josefin font-normal text-amber-100">Try again?</p></a
-		>
+{#if error}
+	<p class="text-center font-Josefin text-4xl font-normal text-amber-100">
+		There was an error please try again
+	</p>
+	<a
+		class:active={$page.url.pathname === '/register'}
+		sveltekit:prefetch
+		href="/register"
+		class="underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4"
+		><p class="text-center font-Josefin font-normal text-amber-100">Try again?</p></a
+	>
 {/if}
 
 {#if accountCreated}
-	<p class="text-center font-Josefin text-4xl font-normal text-amber-100">Your account has been created and you have been logged in!</p>
+	<p class="text-center font-Josefin text-4xl font-normal text-amber-100">
+		Your account has been created and you have been logged in!
+	</p>
 	<a
 		class:active={$page.url.pathname === '/'}
 		sveltekit:prefetch
@@ -80,21 +89,21 @@
 {#if !accountCreated && !isExistingUser && !isNewUser}
 	<h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Register</h2>
 
-	
-	<form on:submit|preventDefault={handleSubmit} class="m-auto text-center pt-4">
+	<form on:submit|preventDefault={handleSubmit} class="m-auto pt-4 text-center">
 		<label for="email" class="block text-amber-100">Email address</label>
 		<input
-				bind:value={user.email}
-				type="email"
-				class="mb-4 rounded bg-amber-100 p-2"
-				placeholder="owly@hootmail.com"
-			/>
+			bind:value={user.email}
+			type="email"
+			class="mb-4 rounded bg-amber-100 p-2"
+			placeholder="owly@hootmail.com"
+		/>
 		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2">Register</button>
 	</form>
-	
 {:else if isNewUser}
-	<p class="text-amber-100 mx-1 text-center">Please fill in these details to create a new account</p>
-	<form on:submit|preventDefault={handleRegister} class="m-auto text-center pt-4">
+	<p class="mx-1 text-center text-amber-100">
+		Please fill in these details to create a new account
+	</p>
+	<form on:submit|preventDefault={handleRegister} class="m-auto pt-4 text-center">
 		<label for="fullName" class="text-amber-100">Full name</label><br />
 		<input
 			bind:value={user.fullName}
