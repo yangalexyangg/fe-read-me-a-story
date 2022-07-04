@@ -12,11 +12,11 @@
 	interface Chapter {
 		chapter_src: string;
 	}
+
 	interface Book {
 		title: string;
 		chapters: Chapter[];
 	}
-
 	let book: Book = {
 		title: '',
 		chapters: [{ chapter_src: '' }]
