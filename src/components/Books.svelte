@@ -83,9 +83,9 @@
 				<h2 class="text-xl">{book.title}</h2>
 				<img src={book.artworkPath} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
 				<a
-					class:active={$page.url.pathname === `/${book.storyId}`}
+					class:active={$page.url.pathname === `/bookshelf/${book.storyId}`}
 					sveltekit:prefetch
-					href={`/${book.storyId}`}
+					href={`/bookshelf/${book.storyId}`}
 					class="underline decoration-solid decoration-2 underline-offset-4">Listen to story</a
 				>
 			</li>

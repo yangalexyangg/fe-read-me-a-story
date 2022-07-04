@@ -7,7 +7,7 @@
 
 	export let bookId: string;
 
-	let src = 'images/book.png';
+	let src = '../images/book.png';
 	let book = {
 		title: ''
 	};
