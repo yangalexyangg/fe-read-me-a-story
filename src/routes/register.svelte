@@ -167,6 +167,4 @@
 	</form>
 {/if}
 
-<!-- {#if isInvitedUser}
-<p>You are invited</p>
-{/if} -->
+

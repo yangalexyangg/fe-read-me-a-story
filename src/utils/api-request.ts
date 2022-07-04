@@ -33,15 +33,10 @@ export const fetchUserStatus = async (email: string) => {
 		} else {
 			return 'registered';
 		}
-	} catch (error: any) {
-		console.log('new user');
+	} catch (error: any ) {
 		return 'new user';
 	}
 
-	//this will return status...
-
-	// const checkUserStatus = await apiCall.get(`/users/${getUserId}`);
-	// return Promise.resolve('not found');
 };
 
 export const createNewUserAndFamily = async (
