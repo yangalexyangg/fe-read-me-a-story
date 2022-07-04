@@ -1,6 +1,6 @@
 <script>
 	import Nav from '../components/Nav.svelte';
-	let src = 'images/owl-logo.png';
+	let src = '/images/owl-logo.png';
 </script>
 
 <header>

@@ -28,6 +28,7 @@
 		title: string;
 		artworkPath: string;
 		url: string;
+		storyId: string;
 	}
 	let srcBook = 'images/book.png';
 	let srcOwl = 'images/owl-logo.png';
@@ -42,6 +43,7 @@
 			const returnedBooks = await fetchStories($familyId);
 			books = returnedBooks.map((bookItem: bookItem) => {
 				return {
+					storyId: Object.keys(bookItem)[0],
 					artworkPath: srcBook,
 					title: Object.values(bookItem)[0].title
 				};
@@ -81,9 +83,9 @@
 				<h2 class="text-xl">{book.title}</h2>
 				<img src={book.artworkPath} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
 				<a
-					class:active={$page.url.pathname === `/${book.title}`}
+					class:active={$page.url.pathname === `/bookshelf/${book.storyId}`}
 					sveltekit:prefetch
-					href={`/${book.title}`}
+					href={`/bookshelf/${book.storyId}`}
 					class="underline decoration-solid decoration-2 underline-offset-4">Listen to story</a
 				>
 			</li>
