@@ -37,6 +37,7 @@
 	const uploadFile = () => {
 		if (/[a-zA-Z]/.test(newStory.title)) {
 			noStoryTitle = false;
+			$stopIsDisabled = true;
 			$resetIsDisabled = true;
 			isUploading = true;
 			const uploadTask = uploadBytesResumable(recordingRef, recordingFile);
@@ -96,6 +97,7 @@
 				class="text-[#000000]"
 				type="text"
 				required
+				disabled = {isUploading}
 				bind:value={newStory.title}
 			/></label
 		>
