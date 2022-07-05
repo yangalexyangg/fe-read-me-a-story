@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createNewUserAndFamily, fetchUserStatus } from '../utils/api-request';
+	import { createNewUserAndFamily, fetchUserStatus, createInvitedUser } from '../utils/api-request';
 	import { page } from '$app/stores';
 	import { userId, familyId } from '../store';
 
@@ -44,30 +44,42 @@
 			isInvitedUser = true;
 		}
 
-		if (response.resUserId) {
-			userId.set(response.resUserId);
-		}
-
 		if (response.resFamilyId) {
 			familyId.set(response.resFamilyId);
 		}
 	};
 
 	const handleRegister = async () => {
-		//needs updating on the basis of backend patch request
-		try {
-			const response = await createNewUserAndFamily(
-				user.email,
-				user.fullName,
-				user.displayName,
-				user.password,
-				family.familyName
-			);
-			accountCreated = true;
-			isNewUser = false;
-			familyId.set(response);
-		} catch (error) {
-			error = true;
+		if (isInvitedUser) {
+			try {
+				const response = await createInvitedUser(
+					user.displayName,
+					user.fullName,
+					user.password,
+					user.email,
+					$familyId
+				);
+				accountCreated = true;
+				isNewUser = false;
+				isInvitedUser = false;
+			} catch (error) {
+				error = true;
+			}
+		} else {
+			try {
+				const response = await createNewUserAndFamily(
+					user.email,
+					user.fullName,
+					user.displayName,
+					user.password,
+					family.familyName
+				);
+				accountCreated = true;
+				isNewUser = false;
+				familyId.set(response);
+			} catch (error) {
+				error = true;
+			}
 		}
 	};
 </script>
@@ -124,7 +136,7 @@
 			class="mb-4 rounded bg-amber-100 p-2"
 			placeholder="owly@hootmail.com"
 		/>
-		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2">Register</button>
+		<button type="submit" class="m-auto block rounded bg-[#b9f6ca] px-4 py-2">Register</button>
 	</form>
 {:else if isNewUser || isInvitedUser}
 	{#if isInvitedUser}
@@ -167,6 +179,6 @@
 
 		<label for="password" class="text-amber-100">Password</label><br />
 		<input bind:value={user.password} type="password" class="mb-4 rounded bg-amber-100 p-2" /><br />
-		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2 text-black">Register</button>
+		<button type="submit" class="rounded bg-[#b9f6ca] px-4 py-2 text-black">Register</button>
 	</form>
 {/if}

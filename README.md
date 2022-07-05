@@ -51,3 +51,9 @@ Minimum Viable Panic are [Rob](https://github.com/RobParry6/), [Charlotte](https
 ### Acknowledgements
 
 Thanks to August, Emily and the other mentors for their support!
+
+Icons:
+
+- <a href="https://www.flaticon.com/free-icons/owl" title="owl icons">Owl icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/microphone" title="microphone icons">Microphone icons created by Freepik - Flaticon</a>
+- <a href="https://www.flaticon.com/free-icons/book" title="book icons">Book icons created by Freepik - Flaticon</a>
