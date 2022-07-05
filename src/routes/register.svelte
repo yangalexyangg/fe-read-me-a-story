@@ -124,7 +124,7 @@
 			class="mb-4 rounded bg-amber-100 p-2"
 			placeholder="owly@hootmail.com"
 		/>
-		<button type="submit" class="block m-auto rounded bg-[#b9f6ca] px-4 py-2">Register</button>
+		<button type="submit" class="m-auto block rounded bg-[#b9f6ca] px-4 py-2">Register</button>
 	</form>
 {:else if isNewUser || isInvitedUser}
 	{#if isInvitedUser}
