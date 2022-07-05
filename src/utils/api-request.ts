@@ -26,17 +26,17 @@ export const fetchUserStatus = async (email: string) => {
 	//this needs to return user id - and return family name
 	let isInvited: boolean = false;
 	let resFamilyId: string = '';
-	let resUserId: string = '';
+	let resInviteId: string = '';
 
 	try {
 		const { data, status } = await apiCall.get(`/users/email/${email}`);
 		if (status === 204) {
 			return { new_user: 'new user' };
 		} else {
-			resUserId = Object.keys(data)[0];
-			resFamilyId = Object.keys(data[resUserId]['families'])[0];
-			isInvited = data[resUserId]['invited'];
-			return { resUserId, resFamilyId, isInvited };
+			resInviteId = Object.keys(data)[0];
+			resFamilyId = Object.keys(data[resInviteId]['families'])[0];
+			isInvited = data[resInviteId]['invited'];
+			return { resInviteId, resFamilyId, isInvited };
 		}
 	} catch (error: any) {
 		return { message: 'An error has occured' };
@@ -80,7 +80,6 @@ export const createNewUserAndFamily = async (
 		return postUserToDatabase.data.family_id;
 	} catch (error) {
 		console.error(error);
-		// temp rejecting until api endpoint is available (ask andy if this doesn't make sense)
 		return Promise.reject();
 	}
 };
@@ -103,6 +102,44 @@ export const inviteUser = async (email: string, familyId: string) => {
 			data
 		});
 	} catch (error) {
+		return Promise.reject();
+	}
+};
+
+export const createInvitedUser = async (
+	displayName: string,
+	fullName: string,
+	password: string,
+	email: string,
+	familyId: string
+) => {
+	try {
+		//create user directly in Firebase database
+		const userCredential: UserCredential = await createUserWithEmailAndPassword(
+			auth,
+			email,
+			password
+		);
+
+		interface UpdatedUser {
+			email: string;
+			fullName: string;
+			displayName: string;
+			userId: string;
+			familyId: string;
+		}
+
+		const updatedUser: UpdatedUser = {
+			email: email,
+			fullName: fullName,
+			displayName: displayName,
+			userId: userCredential.user.uid,
+			familyId: familyId
+		};
+		const createdUser = await apiCall.post(`/users/invites/${familyId}`, updatedUser);
+		return createdUser.data;
+	} catch (error) {
+		console.error(error);
 		return Promise.reject();
 	}
 };
