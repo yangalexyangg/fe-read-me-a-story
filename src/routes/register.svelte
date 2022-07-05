@@ -4,7 +4,6 @@
 	import { userId, familyId } from '../store';
 
 	let src = '/images/owl-logo.png';
-	
 
 	let isInvitedUser: boolean = false;
 	let isNewUser: boolean = false;
@@ -91,7 +90,7 @@
 		sveltekit:prefetch
 		href="/"
 		class="underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4"
-		><p class="text-center font-Josefin font-normal text-amber-100 mt-4">Log in?</p></a
+		><p class="mt-4 text-center font-Josefin font-normal text-amber-100">Log in?</p></a
 	>
 {/if}
 
@@ -123,7 +122,9 @@
 
 {#if !accountCreated && !isInvitedUser && !isNewUser && !isAlreadyRegistered}
 	<h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Register</h2>
-	<p class="text-center text-amber-100 mx-4 mt-2">Register now to create your account and start sharing stories with your family.</p>
+	<p class="mx-4 mt-2 text-center text-amber-100">
+		Register now to create your account and start sharing stories with your family.
+	</p>
 
 	<form on:submit|preventDefault={handleSubmit} class="m-auto pt-4 text-center">
 		<label for="email" class="block text-amber-100">Email address</label>
