@@ -43,9 +43,14 @@
 	</ul>
 {/if}
 
-<footer class="text-[#b9f6ca] text-center italic mt-24 border-t-2 border-[#b9f6ca] mx-3 py-3">
+<footer class="mx-3 mt-24 border-t-2 border-[#b9f6ca] py-3 text-center italic text-[#b9f6ca]">
 	<p class="not-italic">All icons created by Freepik - Flaticon:</p>
-	<a href="https://www.flaticon.com/free-icons/owl" target="blank" title="owl icons">Owl icons</a><br>
-	<a href="https://www.flaticon.com/free-icons/microphone" target="blank" title="microphone icons">Microphone icons</a><br>
-	<a href="https://www.flaticon.com/free-icons/book" target="blank" title="book icons">Book icons </a>
+	<a href="https://www.flaticon.com/free-icons/owl" target="blank" title="owl icons">Owl icons</a
+	><br />
+	<a href="https://www.flaticon.com/free-icons/microphone" target="blank" title="microphone icons"
+		>Microphone icons</a
+	><br />
+	<a href="https://www.flaticon.com/free-icons/book" target="blank" title="book icons"
+		>Book icons
+	</a>
 </footer>
