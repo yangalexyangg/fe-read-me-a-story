@@ -97,7 +97,7 @@
 				class="text-[#000000]"
 				type="text"
 				required
-				disabled = {isUploading}
+				disabled={isUploading}
 				bind:value={newStory.title}
 			/></label
 		>
