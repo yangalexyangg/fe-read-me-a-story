@@ -66,7 +66,7 @@
 			required
 			class="mb-6 rounded bg-amber-100 p-2"
 		/><br />
-		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2">Log in</button>
+		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2 mb-4">Log in</button>
 	</form>
 </div>
 
@@ -74,5 +74,5 @@
 	class:active={$page.url.pathname === `/register`}
 	sveltekit:prefetch
 	href={`/register`}
-	class="text-amber-100 underline decoration-solid decoration-2 underline-offset-4">Register?</a
+	class="text-amber-100 underline decoration-solid decoration-2 underline-offset-4 mt-4 ml-60">Register?</a
 >
