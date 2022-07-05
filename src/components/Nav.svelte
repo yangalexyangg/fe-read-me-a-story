@@ -7,7 +7,7 @@
 		><p class="font-Josefin font-normal text-[#b9f6ca]">Record</p></a
 	>
 	<a class:active={$page.url.pathname === '/bookshelf'} sveltekit:prefetch href="/bookshelf"
-		><p class="font-Josefin font-normal text-[#b9f6ca]">Bookshelf</p></a
+		><p class="font-Josefin font-normal text-[#b9f6ca]">Listen</p></a
 	>
 	<a class:active={$page.url.pathname === '/invite'} sveltekit:prefetch href="/invite"
 		><p class="font-Josefin font-normal text-[#b9f6ca]">Invite</p></a
