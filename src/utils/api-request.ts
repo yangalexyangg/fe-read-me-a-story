@@ -85,6 +85,16 @@ export const createNewUserAndFamily = async (
 	}
 };
 
+export const fetchFamilyId = async (userId: string) => {
+	try {
+		const userData = await apiCall.get(`/users/${userId}`);
+		const resFamilyId: string = Object.keys(userData.data.families)[0];
+		return resFamilyId;
+	} catch (error) {
+		return "There's been an error!";
+	}
+};
+
 export const inviteUser = async (email: string, familyId: string) => {
 	// may need to check if user has already been invited(?)
 	try {
