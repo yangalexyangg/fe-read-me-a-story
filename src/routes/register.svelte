@@ -171,5 +171,3 @@
 	</form>
 {/if}
 
-<p>{$userId}</p>
-<p>{$familyId}</p>
