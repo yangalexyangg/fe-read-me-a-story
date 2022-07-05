@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { fetchStories } from '../utils/api-request';
+	import { fetchUserById, fetchStories } from '../utils/api-request';
 	import { familyId } from '../store';
 
 	interface Chapter {
@@ -29,6 +29,7 @@
 		artworkPath: string;
 		url: string;
 		storyId: string;
+		createdBy: string
 	}
 	let srcBook = 'images/book.png';
 	let srcOwl = 'images/owl-logo.png';
@@ -39,15 +40,26 @@
 
 	const getBooks = async () => {
 		areStoriesLoading = true;
+
+		
 		try {
 			const returnedBooks = await fetchStories($familyId);
-			books = returnedBooks.map((bookItem: bookItem) => {
-				return {
+
+			Promise.all(returnedBooks.map( async (bookItem: bookItem) => {
+				const userId = Object.values(bookItem)[0].created_by;
+				const userData = await fetchUserById(userId)
+				const displayName = userData.display_name
+
+				
+				const story = {
+					createdBy: displayName,
 					storyId: Object.keys(bookItem)[0],
 					artworkPath: srcBook,
 					title: Object.values(bookItem)[0].title
 				};
-			});
+				
+				return story
+			})).then((result) => books = result)
 			areStoriesLoading = false;
 		} catch (error) {
 			console.error(error);
@@ -55,7 +67,7 @@
 	};
 
 	onMount(() => {
-		getBooks();
+		getBooks();		
 	});
 </script>
 
@@ -82,6 +94,7 @@
 			>
 				<h2 class="text-xl">{book.title}</h2>
 				<img src={book.artworkPath} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
+				<p>Recorded by: {book.createdBy}</p>
 				<a
 					class:active={$page.url.pathname === `/bookshelf/${book.storyId}`}
 					sveltekit:prefetch

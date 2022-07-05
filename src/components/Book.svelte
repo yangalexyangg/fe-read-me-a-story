@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { fetchStory } from '../utils/api-request';
+	import { fetchStory, fetchUserById } from '../utils/api-request';
 	import { onMount } from 'svelte';
-	import { familyId } from '../store';
+	import { familyId, userId } from '../store';
 	import { ref, getDownloadURL } from 'firebase/storage';
 	import { storage } from '../utils/admin';
 
@@ -16,15 +16,21 @@
 	interface Book {
 		title: string;
 		chapters: Chapter[];
+		createdBy: String;
 	}
 	let book: Book = {
 		title: '',
-		chapters: [{ chapter_src: '' }]
+		chapters: [{ chapter_src: '' }],
+		createdBy: '',
 	};
 
 	$: chapterSource = '';
 	onMount(async () => {
 		book = await fetchStory(bookId);
+		const userData = await fetchUserById($userId)
+		
+		book.createdBy = userData.display_name
+		
 		chapterSource = await getDownloadURL(ref(storage, book.chapters[0].chapter_src));
 		let audio = document.getElementById('audio') as HTMLAudioElement;
 		if (audio) {
@@ -42,5 +48,6 @@
 >
 	<h2 class="text-center font-Josefin text-4xl font-normal ">{book.title}</h2>
 	<img {src} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
-	<audio controls class="m-auto mt-10" src={chapterSource} />
+	<p>Recorded by: {book.createdBy}</p>
+	<audio controls class="m-auto mt-5" src={chapterSource} />
 </div>
