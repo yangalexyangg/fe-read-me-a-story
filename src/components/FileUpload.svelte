@@ -15,6 +15,7 @@
 	let progress: number = 0;
 	let errorMessage: string = '';
 	let onlineStatus: boolean = false;
+	let noStoryTitle: boolean = false;
 
 	onMount(async () => {
 		recordingIsDisabled.set(false);
@@ -34,38 +35,43 @@
 	};
 
 	const uploadFile = () => {
-		$resetIsDisabled = true;
-		isUploading = true;
-		const uploadTask = uploadBytesResumable(recordingRef, recordingFile);
+		if(/[a-zA-Z]/.test(newStory.title)) {
+			noStoryTitle = false;
+			$resetIsDisabled = true;
+			isUploading = true;
+			const uploadTask = uploadBytesResumable(recordingRef, recordingFile);
 
-		uploadTask.on(
-			'state_changed',
-			(progressSnapshot) => {
-				progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
-				if (progress === 100) fileUploaded = true;
-			},
-			(error) => {
-				switch (error.code) {
-					case 'storage/unauthorized':
-						errorMessage = 'You currently do not have the correct permissions to upload stories.';
-						break;
-					case 'storage/canceled':
-						errorMessage = 'You have cancelled the upload.';
-						break;
-					case 'storage/unauthenticated':
-						errorMessage = 'Unauthenticated user detected. Please check your login.';
-						break;
-					case 'storage/bucket-not-found':
-					case 'storage/project-not-found':
-						errorMessage =
-							'We are currently experiencing some technical issues. Please try again later.';
-						break;
+			uploadTask.on(
+				'state_changed',
+				(progressSnapshot) => {
+					progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
+					if (progress === 100) fileUploaded = true;
+				},
+				(error) => {
+					switch (error.code) {
+						case 'storage/unauthorized':
+							errorMessage = 'You currently do not have the correct permissions to upload stories.';
+							break;
+						case 'storage/canceled':
+							errorMessage = 'You have cancelled the upload.';
+							break;
+						case 'storage/unauthenticated':
+							errorMessage = 'Unauthenticated user detected. Please check your login.';
+							break;
+						case 'storage/bucket-not-found':
+						case 'storage/project-not-found':
+							errorMessage =
+								'We are currently experiencing some technical issues. Please try again later.';
+							break;
+					}
+				},
+				() => {
+					postStory(newStory);
 				}
-			},
-			() => {
-				postStory(newStory);
-			}
-		);
+			);
+		} else {
+			noStoryTitle = true;
+		}
 	};
 
 	const handleReset = () => {
@@ -94,6 +100,10 @@
 			/></label
 		>
 	</form>
+
+	{#if noStoryTitle}
+		<p class="text-amber-100 mt-3">Your story needs a name!</p>
+	{/if}
 
 	{#if !fileUploaded}
 		<button
