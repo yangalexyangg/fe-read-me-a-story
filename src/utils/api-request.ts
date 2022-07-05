@@ -87,11 +87,12 @@ export const createNewUserAndFamily = async (
 
 export const inviteUser = async (email: string, familyId: string) => {
 	// may need to check if user has already been invited(?)
-	// POST to /users
-	// should create a new user and store the family id + store the user in the families object
-
-	// temporary return
-	return Promise.resolve({
-		uid: email
-	});
+	try {
+		const data = await apiCall.post(`/users/invited`, { email: email, familyId: familyId });
+		return Promise.resolve({
+			data
+		});
+	} catch (error) {
+		return Promise.reject();
+	}
 };
