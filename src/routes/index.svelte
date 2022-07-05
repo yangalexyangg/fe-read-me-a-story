@@ -13,7 +13,7 @@
 {:else}
 	<Header />
 	<ul class="text-center">
-		<li class="mb-11">
+		<li>
 			<a
 				class:active={$page.url.pathname === '/record'}
 				sveltekit:prefetch
