@@ -74,10 +74,9 @@
 </div>
 
 <a
-class:active={$page.url.pathname === `/register`}
-sveltekit:prefetch
-href={`/register`}
-class="text-amber-100 underline decoration-solid decoration-2 underline-offset-4 block"
->Register?</a>
-
-
+	class:active={$page.url.pathname === `/register`}
+	sveltekit:prefetch
+	href={`/register`}
+	class="block text-amber-100 underline decoration-solid decoration-2 underline-offset-4"
+	>Register?</a
+>
