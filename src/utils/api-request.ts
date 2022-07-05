@@ -106,6 +106,16 @@ export const inviteUser = async (email: string, familyId: string) => {
 	}
 };
 
+export const fetchUserById = async (userId: string) => {
+	try {
+		const userData = await apiCall.get(`/users/${userId}`);
+		return userData.data;
+	} catch (error) {
+		return "Error, can't find user";
+  }    
+};    
+    
+
 export const createInvitedUser = async (
 	displayName: string,
 	fullName: string,
