@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createNewUserAndFamily, fetchUserStatus, patchUser } from '../utils/api-request';
+	import { createNewUserAndFamily, fetchUserStatus, createInvitedUser } from '../utils/api-request';
 	import { page } from '$app/stores';
 	import { userId, familyId } from '../store';
 
@@ -44,26 +44,21 @@
 			isInvitedUser = true;
 		}
 
-		// if (response.resInviteId) {
-		// 	userId.set(response.resInviteId);
-		// }
-
 		if (response.resFamilyId) {
 			familyId.set(response.resFamilyId);
 		}
 	};
 
 	const handleRegister = async () => {
-		if ($userId) {
+		if (isInvitedUser) {
 			try {
-				const response = await patchUser(
-					$userId,
+				const response = await createInvitedUser(
 					user.displayName,
 					user.fullName,
 					user.password,
-					user.email
+					user.email,
+					$familyId
 				);
-				console.log(response);
 				accountCreated = true;
 				isNewUser = false;
 				isInvitedUser = false;

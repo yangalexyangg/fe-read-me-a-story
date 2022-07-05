@@ -80,7 +80,6 @@ export const createNewUserAndFamily = async (
 		return postUserToDatabase.data.family_id;
 	} catch (error) {
 		console.error(error);
-		// temp rejecting until api endpoint is available (ask andy if this doesn't make sense)
 		return Promise.reject();
 	}
 };
@@ -107,12 +106,12 @@ export const inviteUser = async (email: string, familyId: string) => {
 	}
 };
 
-export const patchUser = async (
-	userId: string,
+export const createInvitedUser = async (
 	displayName: string,
 	fullName: string,
 	password: string,
-	email: string
+	email: string,
+	familyId: string
 ) => {
 	try {
 		//create user directly in Firebase database
@@ -127,17 +126,18 @@ export const patchUser = async (
 			fullName: string;
 			displayName: string;
 			userId: string;
+			familyId: string;
 		}
 
 		const updatedUser: UpdatedUser = {
 			email: email,
 			fullName: fullName,
 			displayName: displayName,
-			userId: userCredential.user.uid
+			userId: userCredential.user.uid,
+			familyId: familyId
 		};
-
-		const patchUserInDatabase = await apiCall.patch(`/users/${userId}`, updatedUser);
-		return patchUserInDatabase.data;
+		const createdUser = await apiCall.post(`/users/invites/${familyId}`, updatedUser);
+		return createdUser.data;
 	} catch (error) {
 		console.error(error);
 		return Promise.reject();
