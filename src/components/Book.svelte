@@ -43,7 +43,6 @@
 	<title>{book.title}</title>
 </svelte:head>
 
-
 <div
 	class="m-5  mt-4 rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center "
 >

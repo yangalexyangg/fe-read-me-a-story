@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import { fetchUserById, fetchStories } from '../utils/api-request';
 	import { familyId } from '../store';
-import Book from './Book.svelte';
+	import Book from './Book.svelte';
 
 	interface Chapter {
 		chapter_src: string;
@@ -40,7 +40,6 @@ import Book from './Book.svelte';
 	let areStoriesLoading: boolean = true;
 
 	const getBooks = async () => {
-
 		try {
 			const returnedBooks = await fetchStories($familyId);
 
@@ -59,18 +58,18 @@ import Book from './Book.svelte';
 
 					return story;
 				})
-			).then((result) => (books = result)).then(() => {
-				areStoriesLoading = false;
-			});
-
+			)
+				.then((result) => (books = result))
+				.then(() => {
+					areStoriesLoading = false;
+				});
 		} catch (error) {
 			console.error(error);
 		}
 	};
 
 	onMount(() => {
-		getBooks()
-
+		getBooks();
 	});
 </script>
 
@@ -80,9 +79,11 @@ import Book from './Book.svelte';
 {:else if books.length > 0}
 	<ul>
 		{#each books as book}
-			<a class:active={$page.url.pathname === `/bookshelf/${book.storyId}`}
-			sveltekit:prefetch
-			href={`/bookshelf/${book.storyId}`}>
+			<a
+				class:active={$page.url.pathname === `/bookshelf/${book.storyId}`}
+				sveltekit:prefetch
+				href={`/bookshelf/${book.storyId}`}
+			>
 				<li
 					class="m-auto mb-5 mt-5 max-w-xs rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center"
 				>
@@ -99,9 +100,8 @@ import Book from './Book.svelte';
 			</a>
 		{/each}
 	</ul>
-
 {:else}
-	<p class="text-center text-amber-100 my-6">
+	<p class="my-6 text-center text-amber-100">
 		Your family hasn't recorded any stories yet. Why not record one now?
 	</p>
 	<p class="text-center font-Josefin font-normal text-amber-100">
@@ -113,8 +113,6 @@ import Book from './Book.svelte';
 		>
 	</p>
 {/if}
-
-
 
 <style>
 	.loader {
