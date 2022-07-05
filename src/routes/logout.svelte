@@ -17,8 +17,14 @@
 	});
 </script>
 
-<img class="m-auto mt-64 w-40" {src} alt="owly" />
-<h1 class="text-center text-amber-100">Goodnight!</h1>
+<div class="m-auto mt-40 animate-pulse text-center text-[#b9f6ca]">
+	<p class="ml-5 inline text-2xl">z</p>
+	<p class="inline text-4xl">z</p>
+	<p class="inline text-6xl">z</p>
+</div>
+
+<img class="m-auto w-40" {src} alt="owly" />
+<h1 class="my-5 text-center text-4xl text-amber-100">Goodnight!</h1>
 
 <a
 	class:active={$page.url.pathname === '/'}
