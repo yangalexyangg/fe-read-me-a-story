@@ -8,14 +8,25 @@
 	export let bookId: string;
 
 	let src = '../images/book.png';
-	let book = {
-		title: ''
+
+	interface Chapter {
+		chapter_src: string;
+	}
+
+	interface Book {
+		title: string;
+		chapters: Chapter[];
+	}
+	let book: Book = {
+		title: '',
+		chapters: [{ chapter_src: '' }]
 	};
+
 	$: chapterSource = '';
 	onMount(async () => {
 		book = await fetchStory(bookId);
 		chapterSource = await getDownloadURL(ref(storage, book.chapters[0].chapter_src));
-		let audio = document.getElementById('audio');
+		let audio = document.getElementById('audio') as HTMLAudioElement;
 		if (audio) {
 			audio.src = chapterSource;
 		}
@@ -25,6 +36,7 @@
 <svelte:head>
 	<title>{book.title}</title>
 </svelte:head>
+
 <h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">{book.title}</h2>
 <img {src} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
 <audio controls class="m-auto mt-10" src={chapterSource} />
