@@ -133,9 +133,9 @@
 			<p class="text-amber-100">Please try to reupload.</p>
 		</section>
 	{:else if fileUploaded}
-		<p class="text-amber-100">File uploaded!</p>
+		<p class="text-amber-100">Story uploaded!</p>
 	{:else if isUploading}
-		<p class="text-amber-100">File uploading... {Math.round(progress)}% done</p>
+		<p class="text-amber-100">Story uploading... {Math.round(progress)}% done</p>
 	{/if}
 </section>
 
