@@ -35,7 +35,7 @@
 	};
 
 	const uploadFile = () => {
-		if(/[a-zA-Z]/.test(newStory.title)) {
+		if (/[a-zA-Z]/.test(newStory.title)) {
 			noStoryTitle = false;
 			$resetIsDisabled = true;
 			isUploading = true;
@@ -102,7 +102,7 @@
 	</form>
 
 	{#if noStoryTitle}
-		<p class="text-amber-100 mt-3">Your story needs a name!</p>
+		<p class="mt-3 text-amber-100">Your story needs a name!</p>
 	{/if}
 
 	{#if !fileUploaded}
@@ -111,11 +111,11 @@
 			on:click={uploadFile}
 			class={isUploading || !$uploadIsDisabled || !onlineStatus
 				? 'bg-slate-400 px-3 py-1 rounded mx-1.5 my-4'
-				: 'bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4'}>Upload</button
+				: 'bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4'}>Upload story</button
 		>
 	{:else}
 		<button on:click={handleReset} class="mx-1.5 my-4 rounded bg-[#b9f6ca] px-3 py-1"
-			>Upload another file?</button
+			>Upload another story?</button
 		>
 	{/if}
 
