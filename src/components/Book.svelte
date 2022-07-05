@@ -21,16 +21,16 @@
 	let book: Book = {
 		title: '',
 		chapters: [{ chapter_src: '' }],
-		createdBy: '',
+		createdBy: ''
 	};
 
 	$: chapterSource = '';
 	onMount(async () => {
 		book = await fetchStory(bookId);
-		const userData = await fetchUserById($userId)
-		
-		book.createdBy = userData.display_name
-		
+		const userData = await fetchUserById($userId);
+
+		book.createdBy = userData.display_name;
+
 		chapterSource = await getDownloadURL(ref(storage, book.chapters[0].chapter_src));
 		let audio = document.getElementById('audio') as HTMLAudioElement;
 		if (audio) {

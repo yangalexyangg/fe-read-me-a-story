@@ -29,7 +29,7 @@
 		artworkPath: string;
 		url: string;
 		storyId: string;
-		createdBy: string
+		createdBy: string;
 	}
 	let srcBook = 'images/book.png';
 	let srcOwl = 'images/owl-logo.png';
@@ -41,25 +41,25 @@
 	const getBooks = async () => {
 		areStoriesLoading = true;
 
-		
 		try {
 			const returnedBooks = await fetchStories($familyId);
 
-			Promise.all(returnedBooks.map( async (bookItem: bookItem) => {
-				const userId = Object.values(bookItem)[0].created_by;
-				const userData = await fetchUserById(userId)
-				const displayName = userData.display_name
+			Promise.all(
+				returnedBooks.map(async (bookItem: bookItem) => {
+					const userId = Object.values(bookItem)[0].created_by;
+					const userData = await fetchUserById(userId);
+					const displayName = userData.display_name;
 
-				
-				const story = {
-					createdBy: displayName,
-					storyId: Object.keys(bookItem)[0],
-					artworkPath: srcBook,
-					title: Object.values(bookItem)[0].title
-				};
-				
-				return story
-			})).then((result) => books = result)
+					const story = {
+						createdBy: displayName,
+						storyId: Object.keys(bookItem)[0],
+						artworkPath: srcBook,
+						title: Object.values(bookItem)[0].title
+					};
+
+					return story;
+				})
+			).then((result) => (books = result));
 			areStoriesLoading = false;
 		} catch (error) {
 			console.error(error);
@@ -67,7 +67,7 @@
 	};
 
 	onMount(() => {
-		getBooks();		
+		getBooks();
 	});
 </script>
 
