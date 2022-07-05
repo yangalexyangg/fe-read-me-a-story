@@ -15,6 +15,7 @@
 	let progress: number = 0;
 	let errorMessage: string = '';
 	let onlineStatus: boolean = false;
+	let noStoryTitle: boolean = false;
 
 	onMount(async () => {
 		recordingIsDisabled.set(false);
@@ -34,38 +35,44 @@
 	};
 
 	const uploadFile = () => {
-		$resetIsDisabled = true;
-		isUploading = true;
-		const uploadTask = uploadBytesResumable(recordingRef, recordingFile);
+		if (/[a-zA-Z]/.test(newStory.title)) {
+			noStoryTitle = false;
+			$stopIsDisabled = true;
+			$resetIsDisabled = true;
+			isUploading = true;
+			const uploadTask = uploadBytesResumable(recordingRef, recordingFile);
 
-		uploadTask.on(
-			'state_changed',
-			(progressSnapshot) => {
-				progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
-				if (progress === 100) fileUploaded = true;
-			},
-			(error) => {
-				switch (error.code) {
-					case 'storage/unauthorized':
-						errorMessage = 'You currently do not have the correct permissions to upload stories.';
-						break;
-					case 'storage/canceled':
-						errorMessage = 'You have cancelled the upload.';
-						break;
-					case 'storage/unauthenticated':
-						errorMessage = 'Unauthenticated user detected. Please check your login.';
-						break;
-					case 'storage/bucket-not-found':
-					case 'storage/project-not-found':
-						errorMessage =
-							'We are currently experiencing some technical issues. Please try again later.';
-						break;
+			uploadTask.on(
+				'state_changed',
+				(progressSnapshot) => {
+					progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
+					if (progress === 100) fileUploaded = true;
+				},
+				(error) => {
+					switch (error.code) {
+						case 'storage/unauthorized':
+							errorMessage = 'You currently do not have the correct permissions to upload stories.';
+							break;
+						case 'storage/canceled':
+							errorMessage = 'You have cancelled the upload.';
+							break;
+						case 'storage/unauthenticated':
+							errorMessage = 'Unauthenticated user detected. Please check your login.';
+							break;
+						case 'storage/bucket-not-found':
+						case 'storage/project-not-found':
+							errorMessage =
+								'We are currently experiencing some technical issues. Please try again later.';
+							break;
+					}
+				},
+				() => {
+					postStory(newStory);
 				}
-			},
-			() => {
-				postStory(newStory);
-			}
-		);
+			);
+		} else {
+			noStoryTitle = true;
+		}
 	};
 
 	const handleReset = () => {
@@ -83,6 +90,10 @@
 
 <svelte:window bind:online={onlineStatus} />
 
+{#if $stopIsDisabled && !fileUploaded}
+	<p class="mt-4 text-center text-amber-100">Ready to upload, add a story name!</p>
+{/if}
+
 <section class="mt-6 flex-col text-center">
 	<form>
 		<label class="text-amber-100"
@@ -90,10 +101,15 @@
 				class="text-[#000000]"
 				type="text"
 				required
+				disabled={isUploading}
 				bind:value={newStory.title}
 			/></label
 		>
 	</form>
+
+	{#if noStoryTitle}
+		<p class="mt-3 text-amber-100">Your story needs a name!</p>
+	{/if}
 
 	{#if !fileUploaded}
 		<button
@@ -101,11 +117,11 @@
 			on:click={uploadFile}
 			class={isUploading || !$uploadIsDisabled || !onlineStatus
 				? 'bg-slate-400 px-3 py-1 rounded mx-1.5 my-4'
-				: 'bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4'}>Upload</button
+				: 'bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4'}>Upload story</button
 		>
 	{:else}
 		<button on:click={handleReset} class="mx-1.5 my-4 rounded bg-[#b9f6ca] px-3 py-1"
-			>Upload another file?</button
+			>Upload another story?</button
 		>
 	{/if}
 
@@ -117,9 +133,9 @@
 			<p class="text-amber-100">Please try to reupload.</p>
 		</section>
 	{:else if fileUploaded}
-		<p class="text-amber-100">File uploaded!</p>
+		<p class="text-amber-100">Story uploaded!</p>
 	{:else if isUploading}
-		<p class="text-amber-100">File uploading... {Math.round(progress)}% done</p>
+		<p class="text-amber-100">Story uploading... {Math.round(progress)}% done</p>
 	{/if}
 </section>
 

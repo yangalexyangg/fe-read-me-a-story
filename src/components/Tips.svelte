@@ -17,7 +17,15 @@
 		handset or by the camera. If you're on a laptop or other device, make sure you select the
 		correct audio source when prompted. To get the best results, keep your fingers, or any other
 		obstructions, away from the mic and make sure it's pointing towards your face during the
-		recording. Find a calm, quiet space to record A lot of background noise in your story can be
+		recording.
+	</p>
+
+	<h3 class="my-4 underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4">
+		Find somewhere quiet
+	</h3>
+
+	<p>
+		It's best to find a calm, quiet space to record. A lot of background noise in your story can be
 		distracting for a child. Try and find a quiet space to make your recordings.
 	</p>
 

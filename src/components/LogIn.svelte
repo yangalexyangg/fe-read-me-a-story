@@ -9,7 +9,7 @@
 	import { page } from '$app/stores';
 	import { familyId, userId } from '../store';
 
-	import {fetchFamilyId} from '../utils/api-request'
+	import { fetchFamilyId } from '../utils/api-request';
 
 	export let userLoggedIn: boolean = false;
 	let src: string = 'images/owl-logo.png';
@@ -28,16 +28,18 @@
 		if (user) {
 			userLoggedIn = true;
 			userId.set(user.uid);
-			const resFamilyId = fetchFamilyId(user.uid)
-			resFamilyId.then((resFamilyId)=>{familyId.set(resFamilyId)})
+			const resFamilyId = fetchFamilyId(user.uid);
+			resFamilyId.then((resFamilyId) => {
+				familyId.set(resFamilyId);
+			});
 		} else {
 			userLoggedIn = false;
 			userId.set('');
 			familyId.set('');
 		}
 	});
-	
-	console.log($familyId)
+
+	console.log($familyId);
 	const handleSubmit = async () => {
 		try {
 			const userCredential: UserCredential = await signInWithEmailAndPassword(
@@ -45,7 +47,6 @@
 				credential.email,
 				credential.password
 			);
-
 		} catch (error) {
 			console.error(error);
 		}
