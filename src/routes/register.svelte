@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import { userId, familyId } from '../store';
 
-	import Header from '../components/Header.svelte';
+	let src = '/images/owl-logo.png';
 
 	let isInvitedUser: boolean = false;
 	let isNewUser: boolean = false;
@@ -84,7 +84,14 @@
 	};
 </script>
 
-<Header />
+<header class="mb-16">
+	<a href="/">
+		<div class="flex items-center p-4">
+			<img class="w-3/12" {src} alt="owly" />
+			<h1 class="font-Amatic text-6xl text-amber-100">Read Me A Story</h1>
+		</div>
+	</a>
+</header>
 
 {#if isAlreadyRegistered}
 	<p class="text-center font-Josefin text-4xl font-normal text-amber-100">
@@ -95,7 +102,7 @@
 		sveltekit:prefetch
 		href="/"
 		class="underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4"
-		><p class="text-center font-Josefin font-normal text-amber-100">Log in</p></a
+		><p class="mt-4 text-center font-Josefin font-normal text-amber-100">Log in?</p></a
 	>
 {/if}
 
@@ -127,6 +134,9 @@
 
 {#if !accountCreated && !isInvitedUser && !isNewUser && !isAlreadyRegistered}
 	<h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Register</h2>
+	<p class="mx-4 mt-2 text-center text-amber-100">
+		Register now to create your account and start sharing stories with your family.
+	</p>
 
 	<form on:submit|preventDefault={handleSubmit} class="m-auto pt-4 text-center">
 		<label for="email" class="block text-amber-100">Email address</label>
