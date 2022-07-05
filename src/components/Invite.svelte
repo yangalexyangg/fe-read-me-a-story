@@ -24,17 +24,18 @@
 
 <h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Invite family members</h2>
 {#if userInvited}
-	<p class="block text-amber-100 text-center" >User was invited!</p>
+	<p class="block text-center text-amber-100">User was invited!</p>
 	<button class="ml-36 rounded bg-[#b9f6ca] px-4 py-2" on:click={inviteAgain}
 		>Invite another user?</button
 	>
 {:else if isError}
-	<p class="block text-amber-100 text-center">There was an error trying to invite your family member!</p>
+	<p class="block text-center text-amber-100">
+		There was an error trying to invite your family member!
+	</p>
 	<button class="ml-36 rounded bg-[#b9f6ca] px-4 py-2" on:click={inviteAgain}>Try again?</button>
 {:else}
-
-	<form class="text-center p-2" on:submit|preventDefault={handleSubmit}>
-		<label class="block text-amber-100 text-center p-2" for="email">Enter email</label>
+	<form class="p-2 text-center" on:submit|preventDefault={handleSubmit}>
+		<label class="block p-2 text-center text-amber-100" for="email">Enter email</label>
 		<input
 			class="mb-6 rounded bg-amber-100 p-2"
 			bind:value={email}
