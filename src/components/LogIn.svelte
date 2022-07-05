@@ -37,7 +37,6 @@
 		}
 	});
 	
-	console.log($familyId)
 	const handleSubmit = async () => {
 		try {
 			const userCredential: UserCredential = await signInWithEmailAndPassword(
