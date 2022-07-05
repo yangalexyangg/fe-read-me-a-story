@@ -112,9 +112,8 @@ export const fetchUserById = async (userId: string) => {
 		return userData.data;
 	} catch (error) {
 		return "Error, can't find user";
-  }    
-};    
-    
+	}
+};
 
 export const createInvitedUser = async (
 	displayName: string,
