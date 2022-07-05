@@ -38,12 +38,7 @@
 			familyId.set('');
 		}
 	});
-<<<<<<< HEAD
 
-	console.log($familyId);
-=======
-	
->>>>>>> bca7437894c8aed3e40e8fa5fa4984923bcdf6c4
 	const handleSubmit = async () => {
 		try {
 			const userCredential: UserCredential = await signInWithEmailAndPassword(

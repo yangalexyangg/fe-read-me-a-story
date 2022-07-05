@@ -54,37 +54,38 @@
 	};
 
 	const handleRegister = async () => {
-		if($userId){
+		if ($userId) {
 			try {
-			const response = await patchUser(
-				$userId,
-				user.displayName,
-				user.fullName,
-				user.password,
-				user.email,
-			);
-			console.log(response)
-			accountCreated = true;
-			isNewUser = false;
-			isInvitedUser = false;
-		} catch (error) {
-			error = true;
-		}
+				const response = await patchUser(
+					$userId,
+					user.displayName,
+					user.fullName,
+					user.password,
+					user.email
+				);
+				console.log(response);
+				accountCreated = true;
+				isNewUser = false;
+				isInvitedUser = false;
+			} catch (error) {
+				error = true;
+			}
 		} else {
-		try {
-			const response = await createNewUserAndFamily(
-				user.email,
-				user.fullName,
-				user.displayName,
-				user.password,
-				family.familyName
-			);
-			accountCreated = true;
-			isNewUser = false;
-			familyId.set(response);
-		} catch (error) {
-			error = true;
-		}}
+			try {
+				const response = await createNewUserAndFamily(
+					user.email,
+					user.fullName,
+					user.displayName,
+					user.password,
+					family.familyName
+				);
+				accountCreated = true;
+				isNewUser = false;
+				familyId.set(response);
+			} catch (error) {
+				error = true;
+			}
+		}
 	};
 </script>
 
