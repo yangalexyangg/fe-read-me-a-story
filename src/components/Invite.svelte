@@ -10,10 +10,9 @@
 		try {
 			await inviteUser(email, $familyId);
 			userInvited = true;
-		} catch(error){
+		} catch (error) {
 			isError = true;
 		}
-		
 	};
 
 	const inviteAgain = async () => {
@@ -31,10 +30,8 @@
 		>Invite another user?</button
 	>
 {:else if isError}
-<p class="block text-amber-100">There was an error trying to invite your family member!</p>
-	<button class="ml-36 rounded bg-[#b9f6ca] px-4 py-2" on:click={inviteAgain}
-		>Try again?</button
-	>
+	<p class="block text-amber-100">There was an error trying to invite your family member!</p>
+	<button class="ml-36 rounded bg-[#b9f6ca] px-4 py-2" on:click={inviteAgain}>Try again?</button>
 {:else}
 	<form on:submit|preventDefault={handleSubmit}>
 		<label class="block text-amber-100" for="email">Enter email</label>

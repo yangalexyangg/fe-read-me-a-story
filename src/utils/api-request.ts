@@ -89,14 +89,11 @@ export const createNewUserAndFamily = async (
 export const inviteUser = async (email: string, familyId: string) => {
 	// may need to check if user has already been invited(?)
 	try {
-		const data = await apiCall.post(`/users/invited`, {"email": email, "familyId": familyId});
+		const data = await apiCall.post(`/users/invited`, { email: email, familyId: familyId });
 		return Promise.resolve({
 			data
 		});
-	} catch(error){
+	} catch (error) {
 		return Promise.reject();
 	}
-	
-
-	
 };
