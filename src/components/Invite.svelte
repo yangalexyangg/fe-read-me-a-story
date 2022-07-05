@@ -44,6 +44,6 @@
 			placeholder="owly@hootmail.com"
 			required
 		/>
-		<button class="ml-36 rounded bg-[#b9f6ca] px-4 py-2" type="submit">Invite!</button>
+		<button class="block m-auto rounded bg-[#b9f6ca] px-4 py-2" type="submit">Invite!</button>
 	</form>
 {/if}
