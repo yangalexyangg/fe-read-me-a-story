@@ -91,8 +91,8 @@
 <svelte:window bind:online={onlineStatus} />
 
 {#if $stopIsDisabled && !fileUploaded}
-		<p class="text-amber-100 text-center mt-4">Ready to upload, add a story name!</p>
-	{/if}
+	<p class="mt-4 text-center text-amber-100">Ready to upload, add a story name!</p>
+{/if}
 
 <section class="mt-6 flex-col text-center">
 	<form>
@@ -106,7 +106,6 @@
 			/></label
 		>
 	</form>
-
 
 	{#if noStoryTitle}
 		<p class="mt-3 text-amber-100">Your story needs a name!</p>

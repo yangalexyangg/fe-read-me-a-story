@@ -72,7 +72,7 @@
 	{#if isRecording}
 		<p class="text-amber-100">Recording in progress...</p>
 	{/if}
-	
+
 	<button
 		disabled={$recordingIsDisabled}
 		on:click={startRecording}
