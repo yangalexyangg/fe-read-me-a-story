@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createNewUserAndFamily, fetchUserStatus } from '../utils/api-request';
+	import { createNewUserAndFamily, fetchUserStatus, patchUser } from '../utils/api-request';
 	import { page } from '$app/stores';
 	import { userId, familyId } from '../store';
 
@@ -54,20 +54,37 @@
 	};
 
 	const handleRegister = async () => {
-		//needs updating on the basis of backend patch request
-		try {
-			const response = await createNewUserAndFamily(
-				user.email,
-				user.fullName,
-				user.displayName,
-				user.password,
-				family.familyName
-			);
-			accountCreated = true;
-			isNewUser = false;
-			familyId.set(response);
-		} catch (error) {
-			error = true;
+		if ($userId) {
+			try {
+				const response = await patchUser(
+					$userId,
+					user.displayName,
+					user.fullName,
+					user.password,
+					user.email
+				);
+				console.log(response);
+				accountCreated = true;
+				isNewUser = false;
+				isInvitedUser = false;
+			} catch (error) {
+				error = true;
+			}
+		} else {
+			try {
+				const response = await createNewUserAndFamily(
+					user.email,
+					user.fullName,
+					user.displayName,
+					user.password,
+					family.familyName
+				);
+				accountCreated = true;
+				isNewUser = false;
+				familyId.set(response);
+			} catch (error) {
+				error = true;
+			}
 		}
 	};
 </script>

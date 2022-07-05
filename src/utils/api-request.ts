@@ -106,3 +106,40 @@ export const inviteUser = async (email: string, familyId: string) => {
 		return Promise.reject();
 	}
 };
+
+export const patchUser = async (
+	userId: string,
+	displayName: string,
+	fullName: string,
+	password: string,
+	email: string
+) => {
+	try {
+		//create user directly in Firebase database
+		const userCredential: UserCredential = await createUserWithEmailAndPassword(
+			auth,
+			email,
+			password
+		);
+
+		interface UpdatedUser {
+			email: string;
+			fullName: string;
+			displayName: string;
+			userId: string;
+		}
+
+		const updatedUser: UpdatedUser = {
+			email: email,
+			fullName: fullName,
+			displayName: displayName,
+			userId: userCredential.user.uid
+		};
+
+		const patchUserInDatabase = await apiCall.patch(`/users/${userId}`, updatedUser);
+		return patchUserInDatabase.data;
+	} catch (error) {
+		console.error(error);
+		return Promise.reject();
+	}
+};
