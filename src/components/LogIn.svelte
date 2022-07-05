@@ -12,7 +12,6 @@
 	import { fetchFamilyId } from '../utils/api-request';
 
 	export let userLoggedIn: boolean = false;
-	let src: string = 'images/owl-logo.png';
 
 	interface Credential {
 		email: string;
@@ -75,9 +74,10 @@
 </div>
 
 <a
-	class:active={$page.url.pathname === `/register`}
-	sveltekit:prefetch
-	href={`/register`}
-	class="mt-4 ml-60 text-amber-100 underline decoration-solid decoration-2 underline-offset-4"
-	>Register?</a
->
+class:active={$page.url.pathname === `/register`}
+sveltekit:prefetch
+href={`/register`}
+class="text-amber-100 underline decoration-solid decoration-2 underline-offset-4 block"
+>Register?</a>
+
+
