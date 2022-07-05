@@ -34,18 +34,22 @@
 	};
 
 	const handleSubmit = async () => {
-		const status = await fetchUserStatus(user.email);
+		const response = await fetchUserStatus(user.email);
 
-		if (status === 'new user') {
+		if (response.new_user === 'new user') {
 			isNewUser = true;
-		}
-
-		if (status === 'registered') {
+		} else if (response.isInvited === false) {
 			isAlreadyRegistered = true;
+		} else {
+			isInvitedUser = true;
 		}
 
-		if (status === 'invited') {
-			isInvitedUser = true;
+		if(response.resUserId) {
+			userId.set(response.resUserId)
+		}
+
+		if(response.resFamilyId) {
+			familyId.set(response.resFamilyId)
 		}
 	};
 
@@ -166,3 +170,4 @@
 		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2 text-black">Register</button>
 	</form>
 {/if}
+
