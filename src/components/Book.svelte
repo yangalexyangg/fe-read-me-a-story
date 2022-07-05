@@ -37,10 +37,10 @@
 	<title>{book.title}</title>
 </svelte:head>
 
-
-<div class="mt-20  m-5  rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center ">
+<div
+	class="m-5  mt-20  rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center "
+>
 	<h2 class="text-center font-Josefin text-4xl font-normal ">{book.title}</h2>
 	<img {src} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
 	<audio controls class="m-auto mt-10" src={chapterSource} />
 </div>
-
