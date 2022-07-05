@@ -44,9 +44,9 @@
 			isInvitedUser = true;
 		}
 
-		if (response.resUserId) {
-			userId.set(response.resUserId);
-		}
+		// if (response.resInviteId) {
+		// 	userId.set(response.resInviteId);
+		// }
 
 		if (response.resFamilyId) {
 			familyId.set(response.resFamilyId);
