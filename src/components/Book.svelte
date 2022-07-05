@@ -44,9 +44,9 @@
 </svelte:head>
 
 <div
-	class="m-5  mt-20  rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center "
+	class="m-5  mt-4 rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center "
 >
-	<h2 class="text-center font-Josefin text-4xl font-normal ">{book.title}</h2>
+	<h2 class="text-center font-Josefin text-4xl font-normal">{book.title}</h2>
 	<img {src} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
 	<p>Recorded by: {book.createdBy}</p>
 	<audio controls class="m-auto mt-5" src={chapterSource} />
