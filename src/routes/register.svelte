@@ -170,3 +170,6 @@
 		<button type="submit" class="ml-36 rounded bg-[#b9f6ca] px-4 py-2 text-black">Register</button>
 	</form>
 {/if}
+
+<p>{$userId}</p>
+<p>{$familyId}</p>

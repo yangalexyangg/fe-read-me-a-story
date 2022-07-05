@@ -29,13 +29,13 @@ export const fetchUserStatus = async (email: string) => {
 	let resUserId: string = '';
 
 	try {
-		const response = await apiCall.get(`/users/email/${email}`);
-		if (response.status === 204) {
+		const { data, status } = await apiCall.get(`/users/email/${email}`);
+		if (status === 204) {
 			return { new_user: 'new user' };
 		} else {
-			resUserId = Object.keys(response.data)[0];
-			resFamilyId = Object.keys(response.data[resUserId]['families'])[0];
-			isInvited = response.data[resUserId]['invited'];
+			resUserId = Object.keys(data)[0];
+			resFamilyId = Object.keys(data[resUserId]['families'])[0];
+			isInvited = data[resUserId]['invited'];
 			return { resUserId, resFamilyId, isInvited };
 		}
 	} catch (error: any) {
