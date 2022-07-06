@@ -110,6 +110,8 @@
 		}
 	};
 
+	const patchStory = () => {};
+
 	const handleReset = () => {
 		recordingIsDisabled.set(false);
 		stopIsDisabled.set(false);
@@ -182,7 +184,7 @@
 	{#if !fileUploaded}
 		<button
 			disabled={!$uploadIsDisabled || !onlineStatus}
-			on:click={uploadFile}
+			on:click={isNewStory ? uploadFile : patchStory}
 			class={isUploading || !$uploadIsDisabled || !onlineStatus
 				? 'bg-slate-400 px-3 py-1 rounded mx-1.5 my-4'
 				: 'bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4'}>Upload story</button
