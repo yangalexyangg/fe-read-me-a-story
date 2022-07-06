@@ -87,7 +87,7 @@
 		class:active={$page.url.pathname === `/register`}
 		sveltekit:prefetch
 		href={`/register`}
-		class="m-auto mt-2 text-amber-100 underline decoration-solid decoration-2 underline-offset-4"
+		class="m-auto mt-2 text-amber-100 underline decoration-solid decoration-2 underline-offset-4 hover:text-[#b9f6ca]"
 		>Register?</a
 	>
 </div>
