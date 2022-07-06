@@ -145,6 +145,7 @@
 			type="email"
 			class="mb-4 rounded bg-amber-100 p-2"
 			placeholder="owly@hootmail.com"
+			required
 		/>
 		<button
 			type="submit"
