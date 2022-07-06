@@ -33,7 +33,7 @@
 		There was an error trying to invite your family member!
 	</p>
 	<button
-		class="delay-5 m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500"
+		class="delay-5 m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 hover:text-white"
 		on:click={inviteAgain}>Try again?</button
 	>
 {:else}
@@ -48,7 +48,7 @@
 			required
 		/>
 		<button
-			class="delay-5 m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500"
+			class="delay-5 m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 hover:text-white"
 			type="submit">Invite!</button
 		>
 	</form>
