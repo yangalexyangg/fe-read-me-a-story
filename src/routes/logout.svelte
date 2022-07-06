@@ -30,6 +30,8 @@
 	class:active={$page.url.pathname === '/'}
 	sveltekit:prefetch
 	href="/"
-	class="underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4"
-	><p class="text-center font-Josefin font-normal text-amber-100">Log back in?</p></a
+	class="underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4 hover:decoration-[#b9f6ca]"
+	><p class="text-center font-Josefin font-normal text-amber-100 hover:text-[#b9f6ca]">
+		Log back in?
+	</p></a
 >
