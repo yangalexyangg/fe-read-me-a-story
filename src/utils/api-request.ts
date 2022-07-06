@@ -120,7 +120,8 @@ export const createInvitedUser = async (
 	fullName: string,
 	password: string,
 	email: string,
-	familyId: string
+	familyId: string,
+	inviteId: string
 ) => {
 	try {
 		//create user directly in Firebase database
@@ -136,6 +137,7 @@ export const createInvitedUser = async (
 			displayName: string;
 			userId: string;
 			familyId: string;
+			inviteId: string;
 		}
 
 		const updatedUser: UpdatedUser = {
@@ -143,7 +145,8 @@ export const createInvitedUser = async (
 			fullName: fullName,
 			displayName: displayName,
 			userId: userCredential.user.uid,
-			familyId: familyId
+			familyId: familyId,
+			inviteId: inviteId
 		};
 		const createdUser = await apiCall.post(`/users/invites/${familyId}`, updatedUser);
 		return createdUser.data;
