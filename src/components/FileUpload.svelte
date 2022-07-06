@@ -121,42 +121,41 @@
 	const patchStory = () => {
 		if (selected.storyId) {
 			$stopIsDisabled = true;
-		$resetIsDisabled = true;
-		isUploading = true;
-		const uploadTask = uploadBytesResumable(recordingRef, recordingFile);
+			$resetIsDisabled = true;
+			isUploading = true;
+			const uploadTask = uploadBytesResumable(recordingRef, recordingFile);
 
-		uploadTask.on(
-			'state_changed',
-			(progressSnapshot) => {
-				progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
-				if (progress === 100) fileUploaded = true;
-			},
-			(error) => {
-				switch (error.code) {
-					case 'storage/unauthorized':
-						errorMessage = 'You currently do not have the correct permissions to upload stories.';
-						break;
-					case 'storage/canceled':
-						errorMessage = 'You have cancelled the upload.';
-						break;
-					case 'storage/unauthenticated':
-						errorMessage = 'Unauthenticated user detected. Please check your login.';
-						break;
-					case 'storage/bucket-not-found':
-					case 'storage/project-not-found':
-						errorMessage =
-							'We are currently experiencing some technical issues. Please try again later.';
-						break;
+			uploadTask.on(
+				'state_changed',
+				(progressSnapshot) => {
+					progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
+					if (progress === 100) fileUploaded = true;
+				},
+				(error) => {
+					switch (error.code) {
+						case 'storage/unauthorized':
+							errorMessage = 'You currently do not have the correct permissions to upload stories.';
+							break;
+						case 'storage/canceled':
+							errorMessage = 'You have cancelled the upload.';
+							break;
+						case 'storage/unauthenticated':
+							errorMessage = 'Unauthenticated user detected. Please check your login.';
+							break;
+						case 'storage/bucket-not-found':
+						case 'storage/project-not-found':
+							errorMessage =
+								'We are currently experiencing some technical issues. Please try again later.';
+							break;
+					}
+				},
+				() => {
+					addChapter(newChapter, storyId);
 				}
-			},
-			() => {
-				addChapter(newChapter, storyId);
-			}
-		);
-	}
-	else {
-		storySelected = true
-	}
+			);
+		} else {
+			storySelected = true;
+		}
 	};
 
 	const handleReset = () => {
@@ -202,8 +201,12 @@
 <section class="mt-6 flex-col text-center">
 	{#if isAddToStory}
 		<section class="mx-auto mt-2 flex-col text-center">
-			<select bind:value={selected} on:change={() => {(storyId = selected.storyId)}
-			}>
+			<select
+				bind:value={selected}
+				on:change={() => {
+					storyId = selected.storyId;
+				}}
+			>
 				<option disabled>select a story</option>
 				{#each stories as story}
 					<option value={story}>{story.title}</option>
@@ -231,7 +234,7 @@
 	{/if}
 
 	{#if storySelected}
-	<p class="mt-3 text-amber-100">You need to choose a story!</p>
+		<p class="mt-3 text-amber-100">You need to choose a story!</p>
 	{/if}
 
 	{#if !fileUploaded}
