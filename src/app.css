@@ -4,3 +4,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+a {
+    @apply text-amber-100 hover:text-blue-800 visited:text-purple-600;
+ }
