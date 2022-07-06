@@ -20,7 +20,7 @@
 	}
 	let book: Book = {
 		title: '',
-		chapters: [{ chapter_src: '' , created_by: ''}],
+		chapters: [{ chapter_src: '', created_by: '' }],
 		createdBy: ''
 	};
 
@@ -47,10 +47,10 @@
 		<h2 class="text-center font-Josefin text-4xl font-normal">{book.title}</h2>
 		<img {src} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
 		{#if book.chapters.length === 1}
-			<Player index={-1} author = {book.chapters[0].created_by} src={book.chapters[0].chapter_src} />
+			<Player index={-1} author={book.chapters[0].created_by} src={book.chapters[0].chapter_src} />
 		{:else}
 			{#each book.chapters as chapter, i}
-				<Player index={i} author = {chapter.created_by} src={chapter.chapter_src} />
+				<Player index={i} author={chapter.created_by} src={chapter.chapter_src} />
 			{/each}
 		{/if}
 	{/if}

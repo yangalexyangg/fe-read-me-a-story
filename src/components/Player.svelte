@@ -28,8 +28,8 @@
 	<p>Loading...</p>
 {:else}
 	{#if index >= 0}
-		<p class="text-xl mt-12 mb-2">Chapter {index + 1}</p>
+		<p class="mt-12 mb-2 text-xl">Chapter {index + 1}</p>
 	{/if}
 	<audio id={`audio${index}`} controls class="m-auto" src={chapterSource} />
-	<p class="italic mt-2">Read by: {authorName}</p>
+	<p class="mt-2 italic">Read by: {authorName}</p>
 {/if}
