@@ -51,6 +51,9 @@
 	};
 </script>
 
+<p class="text-center text-amber-100 mt-4 mb-2">Record and share bedtime stories<br>
+	 with your family</p>
+
 <div class="flex justify-center">
 	<form on:submit|preventDefault={handleSubmit} class="text-2xl">
 		<label for="username" class="block text-amber-100">Email:</label>
@@ -69,14 +72,15 @@
 			required
 			class="mb-6 rounded bg-amber-100 p-2"
 		/><br />
-		<button type="submit" class="ml-36 mb-4 rounded bg-[#b9f6ca] px-4 py-2">Log in</button>
+		<button type="submit" class="ml-36 mb-4 rounded bg-[#b9f6ca] px-4 py-2 transition ease-in-out delay-5 hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 duration-100">Log in</button>
 	</form>
 </div>
 
+<div class="flex">
 <a
 	class:active={$page.url.pathname === `/register`}
 	sveltekit:prefetch
 	href={`/register`}
-	class="block text-amber-100 underline decoration-solid decoration-2 underline-offset-4"
-	>Register?</a
->
+	class="text-amber-100 underline decoration-solid decoration-2 underline-offset-4 m-auto mt-2"
+	>Register?</a>
+</div>
