@@ -12,7 +12,6 @@
 	import { fetchFamilyId } from '../utils/api-request';
 
 	export let userLoggedIn: boolean = false;
-	let src: string = 'images/owl-logo.png';
 
 	interface Credential {
 		email: string;
@@ -52,6 +51,11 @@
 	};
 </script>
 
+<p class="mt-4 mb-2 text-center text-amber-100">
+	Record and share bedtime stories<br />
+	with your family
+</p>
+
 <div class="flex justify-center">
 	<form on:submit|preventDefault={handleSubmit} class="text-2xl">
 		<label for="username" class="block text-amber-100">Email:</label>
@@ -70,14 +74,20 @@
 			required
 			class="mb-6 rounded bg-amber-100 p-2"
 		/><br />
-		<button type="submit" class="ml-36 mb-4 rounded bg-[#b9f6ca] px-4 py-2">Log in</button>
+		<button
+			type="submit"
+			class="delay-5 ml-36 mb-4 rounded bg-[#b9f6ca] px-4 py-2 transition delay-150 duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 hover:text-white"
+			>Log in</button
+		>
 	</form>
 </div>
 
-<a
-	class:active={$page.url.pathname === `/register`}
-	sveltekit:prefetch
-	href={`/register`}
-	class="mt-4 ml-60 text-amber-100 underline decoration-solid decoration-2 underline-offset-4"
-	>Register?</a
->
+<div class="flex">
+	<a
+		class:active={$page.url.pathname === `/register`}
+		sveltekit:prefetch
+		href={`/register`}
+		class="m-auto mt-2 text-amber-100 underline decoration-solid decoration-2 underline-offset-4 hover:text-[#b9f6ca]"
+		>Register?</a
+	>
+</div>

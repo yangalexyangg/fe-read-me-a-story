@@ -4,18 +4,15 @@
 
 <nav class="mx-3 mb-6 flex justify-center gap-4 border-y-2 border-[#b9f6ca] py-3">
 	<a class:active={$page.url.pathname === '/record'} sveltekit:prefetch href="/record"
-		><p class="font-Josefin font-normal text-[#b9f6ca]">Record</p></a
+		><p class="font-Josefin font-normal text-[#b9f6ca] hover:text-amber-100">Record</p></a
 	>
 	<a class:active={$page.url.pathname === '/bookshelf'} sveltekit:prefetch href="/bookshelf"
-		><p class="font-Josefin font-normal text-[#b9f6ca]">Bookshelf</p></a
+		><p class="font-Josefin font-normal text-[#b9f6ca] hover:text-amber-100">Bookshelf</p></a
 	>
 	<a class:active={$page.url.pathname === '/invite'} sveltekit:prefetch href="/invite"
-		><p class="font-Josefin font-normal text-[#b9f6ca]">Invite</p></a
+		><p class="font-Josefin font-normal text-[#b9f6ca] hover:text-amber-100 ">Invite</p></a
 	>
 	<a class:active={$page.url.pathname === '/logout'} sveltekit:prefetch href="/logout"
-		><p class="font-Josefin font-normal text-[#b9f6ca]">Log out</p></a
+		><p class="font-Josefin font-normal text-[#b9f6ca] hover:text-amber-100">Log out</p></a
 	>
 </nav>
-
-<style>
-</style>

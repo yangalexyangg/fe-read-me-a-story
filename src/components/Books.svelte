@@ -77,7 +77,7 @@
 {#if areStoriesLoading}
 	<div class="loader"><img class="m-auto mt-12 w-12" src={srcOwl} alt="" /></div>
 {:else if books.length > 0}
-	<ul>
+	<ul class="flex-wrap items-stretch justify-center gap-5 lg:mx-80 lg:flex">
 		{#each books as book}
 			<a
 				class:active={$page.url.pathname === `/bookshelf/${book.storyId}`}
@@ -85,9 +85,9 @@
 				href={`/bookshelf/${book.storyId}`}
 			>
 				<li
-					class="m-auto mb-5 mt-5 max-w-xs rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center"
+					class="m-auto mb-5 mt-5 max-w-xs shrink rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center lg:p-4"
 				>
-					<h2 class="text-2xl">{book.title}</h2>
+					<h2 class="text-2xl lg:text-lg">{book.title}</h2>
 					<img src={book.artworkPath} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
 					<p>Recorded by: {book.createdBy}</p>
 					<a

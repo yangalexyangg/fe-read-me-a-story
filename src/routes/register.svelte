@@ -86,8 +86,8 @@
 
 <header class="mb-16">
 	<a href="/">
-		<div class="flex items-center p-4">
-			<img class="w-3/12" {src} alt="owly" />
+		<div class="flex justify-center p-4">
+			<img class="max-w-[85px]" {src} alt="owly" />
 			<h1 class="font-Amatic text-6xl text-amber-100">Read Me A Story</h1>
 		</div>
 	</a>
@@ -145,8 +145,13 @@
 			type="email"
 			class="mb-4 rounded bg-amber-100 p-2"
 			placeholder="owly@hootmail.com"
+			required
 		/>
-		<button type="submit" class="m-auto block rounded bg-[#b9f6ca] px-4 py-2">Register</button>
+		<button
+			type="submit"
+			class="delay-5 m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition delay-150 duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 hover:text-white"
+			>Register</button
+		>
 	</form>
 {:else if isNewUser || isInvitedUser}
 	{#if isInvitedUser}
@@ -189,6 +194,10 @@
 
 		<label for="password" class="text-amber-100">Password</label><br />
 		<input bind:value={user.password} type="password" class="mb-4 rounded bg-amber-100 p-2" /><br />
-		<button type="submit" class="rounded bg-[#b9f6ca] px-4 py-2 text-black">Register</button>
+		<button
+			type="submit"
+			class="delay-5 rounded bg-[#b9f6ca] px-4 py-2 text-black transition delay-150 duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 hover:text-white"
+			>Register</button
+		>
 	</form>
 {/if}
