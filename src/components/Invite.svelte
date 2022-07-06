@@ -29,10 +29,13 @@
 		>Invite another user?</button
 	>
 {:else if isError}
-	<p class="block text-center text-amber-100 my-4">
+	<p class="my-4 block text-center text-amber-100">
 		There was an error trying to invite your family member!
 	</p>
-	<button class="m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition ease-in-out delay-5 hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 duration-100" on:click={inviteAgain}>Try again?</button>
+	<button
+		class="delay-5 m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500"
+		on:click={inviteAgain}>Try again?</button
+	>
 {:else}
 	<form class="p-2 text-center" on:submit|preventDefault={handleSubmit}>
 		<label class="block p-2 text-center text-amber-100" for="email">Enter email</label>
@@ -44,6 +47,9 @@
 			placeholder="owly@hootmail.com"
 			required
 		/>
-		<button class="m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition ease-in-out delay-5 hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 duration-100" type="submit">Invite!</button>
+		<button
+			class="delay-5 m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500"
+			type="submit">Invite!</button
+		>
 	</form>
 {/if}
