@@ -19,6 +19,7 @@
 	let isAddToStory: boolean = false;
 	let storyId: string = '';
 	let selected: any;
+	let storySelected: boolean = false;
 
 	interface Chapter {
 		chapter_src: string;
@@ -118,7 +119,8 @@
 	};
 
 	const patchStory = () => {
-		$stopIsDisabled = true;
+		if (selected.storyId) {
+			$stopIsDisabled = true;
 		$resetIsDisabled = true;
 		isUploading = true;
 		const uploadTask = uploadBytesResumable(recordingRef, recordingFile);
@@ -148,11 +150,13 @@
 				}
 			},
 			() => {
-				console.log(newChapter, storyId);
-
 				addChapter(newChapter, storyId);
 			}
 		);
+	}
+	else {
+		storySelected = true
+	}
 	};
 
 	const handleReset = () => {
@@ -198,7 +202,8 @@
 <section class="mt-6 flex-col text-center">
 	{#if isAddToStory}
 		<section class="mx-auto mt-2 flex-col text-center">
-			<select bind:value={selected} on:change={() => (storyId = selected.storyId)}>
+			<select bind:value={selected} on:change={() => {(storyId = selected.storyId)}
+			}>
 				<option disabled>select a story</option>
 				{#each stories as story}
 					<option value={story}>{story.title}</option>
@@ -223,6 +228,10 @@
 
 	{#if noStoryTitle}
 		<p class="mt-3 text-amber-100">Your story needs a name!</p>
+	{/if}
+
+	{#if storySelected}
+	<p class="mt-3 text-amber-100">You need to choose a story!</p>
 	{/if}
 
 	{#if !fileUploaded}
