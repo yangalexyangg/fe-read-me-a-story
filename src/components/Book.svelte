@@ -49,5 +49,5 @@
 	<h2 class="text-center font-Josefin text-4xl font-normal">{book.title}</h2>
 	<img {src} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
 	<p>Recorded by: {book.createdBy}</p>
-	<audio controls class="m-auto mt-5" src={chapterSource} />
+	<audio controls class="m-auto mt-5 p-2" src={chapterSource} />
 </div>
