@@ -4,7 +4,7 @@
 
 	import { recordingIsDisabled, stopIsDisabled, uploadIsDisabled, resetIsDisabled } from '../store';
 	import { onMount } from 'svelte';
-	import { fetchStories, postStory } from '../utils/api-request';
+	import { fetchStories, postStory, addChapter } from '../utils/api-request';
 
 	import { userId, familyId } from '../store';
 
@@ -17,6 +17,8 @@
 	let noStoryTitle: boolean = false;
 	let isNewStory: boolean = false;
 	let isAddToStory: boolean = false;
+	let storyId: string = "";
+	let selected: any;
 
 	interface Chapter {
 		chapter_src: string;
@@ -58,6 +60,11 @@
 		familyId: $familyId,
 		chapterSource: recordingRef.toString()
 	};
+
+	let newChapter = {
+		userId: $userId,
+		chapterSource: recordingRef.toString()
+	}
 
 	const handleNewStory = () => {
 		isNewStory = true;
@@ -110,7 +117,43 @@
 		}
 	};
 
-	const patchStory = () => {};
+	const patchStory = () => {
+		$stopIsDisabled = true;
+			$resetIsDisabled = true;
+			isUploading = true;
+			const uploadTask = uploadBytesResumable(recordingRef, recordingFile);
+
+			uploadTask.on(
+				'state_changed',
+				(progressSnapshot) => {
+					progress = (progressSnapshot.bytesTransferred / progressSnapshot.totalBytes) * 100;
+					if (progress === 100) fileUploaded = true;
+				},
+				(error) => {
+					switch (error.code) {
+						case 'storage/unauthorized':
+							errorMessage = 'You currently do not have the correct permissions to upload stories.';
+							break;
+						case 'storage/canceled':
+							errorMessage = 'You have cancelled the upload.';
+							break;
+						case 'storage/unauthenticated':
+							errorMessage = 'Unauthenticated user detected. Please check your login.';
+							break;
+						case 'storage/bucket-not-found':
+						case 'storage/project-not-found':
+							errorMessage =
+								'We are currently experiencing some technical issues. Please try again later.';
+							break;
+					}
+				},
+				() => {
+					console.log(newChapter, storyId);
+					
+					addChapter(newChapter, storyId);
+				}
+			);
+	};
 
 	const handleReset = () => {
 		recordingIsDisabled.set(false);
@@ -128,7 +171,9 @@
 		const returnStories = await fetchStories($familyId);
 
 		stories = returnStories.map((story: storyItem) => {
-			return { title: Object.values(story)[0].title };
+			return { title: Object.values(story)[0].title,
+				storyId: Object.keys(story)[0],
+			};
 		});
 	};
 
@@ -155,9 +200,10 @@
 <section class="mt-6 flex-col text-center">
 	{#if isAddToStory}
 		<section class="mx-auto mt-2 flex-col text-center">
-			<select>
+			<select bind:value={selected} on:change={()=> storyId = selected.storyId}>
+					<option disabled>select a story</option>
 				{#each stories as story}
-					<option>{story.title}</option>
+					<option value={story}>{story.title}</option>
 				{/each}
 			</select>
 		</section>
@@ -208,5 +254,4 @@
 		<p class="text-amber-100">Story uploading... {Math.round(progress)}% done</p>
 	{/if}
 </section>
-
 <style></style>
