@@ -10,6 +10,7 @@
 	let accountCreated: boolean = false;
 	let error: boolean = false;
 	let isAlreadyRegistered: boolean = false;
+	let inviteId: string = '';
 
 	interface Family {
 		familyName: string;
@@ -42,6 +43,7 @@
 			isAlreadyRegistered = true;
 		} else {
 			isInvitedUser = true;
+			inviteId = response.resInviteId;
 		}
 
 		if (response.resFamilyId) {
@@ -57,7 +59,8 @@
 					user.fullName,
 					user.password,
 					user.email,
-					$familyId
+					$familyId,
+					inviteId
 				);
 				accountCreated = true;
 				isNewUser = false;
