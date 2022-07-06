@@ -10,7 +10,7 @@
 	let accountCreated: boolean = false;
 	let error: boolean = false;
 	let isAlreadyRegistered: boolean = false;
-	let inviteId: string = ""
+	let inviteId: string = '';
 
 	interface Family {
 		familyName: string;
