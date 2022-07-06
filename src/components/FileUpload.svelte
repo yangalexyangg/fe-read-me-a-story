@@ -2,10 +2,9 @@
 	import { ref, uploadBytesResumable } from 'firebase/storage';
 	import { storage } from '../utils/admin';
 
-	import { get } from 'svelte/store';
 	import { recordingIsDisabled, stopIsDisabled, uploadIsDisabled, resetIsDisabled } from '../store';
 	import { onMount } from 'svelte';
-	import { postStory } from '../utils/api-request';
+	import { fetchStories, postStory } from '../utils/api-request';
 
 	import { userId, familyId } from '../store';
 
@@ -16,6 +15,32 @@
 	let errorMessage: string = '';
 	let onlineStatus: boolean = false;
 	let noStoryTitle: boolean = false;
+	let isNewStory: boolean = false;
+	let isAddToStory: boolean = false;
+
+	interface Chapter {
+		chapter_src: string;
+		created_by: string;
+		played: boolean;
+	}
+
+	interface Story {
+		title: string;
+	}
+	let stories: Story[] = [];
+
+	interface storyItem {
+		storyId: {
+			chapters: Chapter[];
+			cover: string;
+			created_at: number;
+			created_by: string;
+			families: {
+				family_id: boolean;
+			};
+			title: string;
+		};
+	}
 
 	onMount(async () => {
 		recordingIsDisabled.set(false);
@@ -32,6 +57,16 @@
 		userId: $userId,
 		familyId: $familyId,
 		chapterSource: recordingRef.toString()
+	};
+
+	const handleNewStory = () => {
+		isNewStory = true;
+		isAddToStory = false;
+	};
+
+	const handleAddToStory = () => {
+		isAddToStory = true;
+		isNewStory = false;
 	};
 
 	const uploadFile = () => {
@@ -86,6 +121,18 @@
 		newStory.chapterSource = '';
 		$resetIsDisabled = true;
 	};
+
+	const getStories = async () => {
+		const returnStories = await fetchStories($familyId);
+
+		stories = returnStories.map((story: storyItem) => {
+			return { title: Object.values(story)[0].title };
+		});
+	};
+
+	onMount(() => {
+		getStories();
+	});
 </script>
 
 <svelte:window bind:online={onlineStatus} />
@@ -94,18 +141,39 @@
 	<p class="mt-4 text-center text-amber-100">Ready to upload, add a story name!</p>
 {/if}
 
+<section class="mt-2 flex-col text-center">
+	<button class="mx-1.5 my-4 rounded bg-[#b9f6ca] px-3 py-1" on:click={handleNewStory}
+		>New Story</button
+	>
+	<button class="mx-1.5 my-4 rounded bg-[#b9f6ca] px-3 py-1" on:click={handleAddToStory}
+		>Add to a Story</button
+	>
+</section>
+
 <section class="mt-6 flex-col text-center">
-	<form>
-		<label class="text-amber-100"
-			>Story name <input
-				class="text-[#000000]"
-				type="text"
-				required
-				disabled={isUploading}
-				bind:value={newStory.title}
-			/></label
-		>
-	</form>
+	{#if isAddToStory}
+		<section class="mx-auto mt-2 flex-col text-center">
+			<select>
+				{#each stories as story}
+					<option>{story.title}</option>
+				{/each}
+			</select>
+		</section>
+	{/if}
+
+	{#if isNewStory}
+		<form>
+			<label class="text-amber-100"
+				>Story name <input
+					class="text-[#000000]"
+					type="text"
+					required
+					disabled={isUploading}
+					bind:value={newStory.title}
+				/></label
+			>
+		</form>
+	{/if}
 
 	{#if noStoryTitle}
 		<p class="mt-3 text-amber-100">Your story needs a name!</p>
