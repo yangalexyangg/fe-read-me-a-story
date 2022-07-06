@@ -70,15 +70,20 @@
 	const handleNewStory = () => {
 		isNewStory = true;
 		isAddToStory = false;
+		storySelected = false;
 	};
 
 	const handleAddToStory = () => {
 		isAddToStory = true;
 		isNewStory = false;
+		noStoryTitle = false;
 	};
 
 	const uploadFile = () => {
 		if (/[a-zA-Z]/.test(newStory.title)) {
+			isNewStory = false;
+			isAddToStory = false;
+			storySelected = false;
 			noStoryTitle = false;
 			$stopIsDisabled = true;
 			$resetIsDisabled = true;
@@ -120,6 +125,8 @@
 
 	const patchStory = () => {
 		if (selected.storyId) {
+			isAddToStory = false;
+			isNewStory = false;
 			$stopIsDisabled = true;
 			$resetIsDisabled = true;
 			isUploading = true;
@@ -159,6 +166,8 @@
 	};
 
 	const handleReset = () => {
+		isAddToStory = false;
+		isNewStory = false;
 		recordingIsDisabled.set(false);
 		stopIsDisabled.set(false);
 		uploadIsDisabled.set(false);
@@ -186,26 +195,28 @@
 <svelte:window bind:online={onlineStatus} />
 
 {#if $stopIsDisabled && !fileUploaded}
-	<p class="mt-4 text-center text-amber-100">Ready to upload, add a story name!</p>
+	<p class="mt-4 text-center text-amber-100">Ready to upload, create a new story or add to an exisiting story?</p>
+	<section class="mt-2 flex-col text-center">
+		<button class="mx-1.5 my-4 rounded bg-[#b9f6ca] px-3 py-1" on:click={handleNewStory}
+			>New Story</button
+		>
+		<button class="mx-1.5 my-4 rounded bg-[#b9f6ca] px-3 py-1" on:click={handleAddToStory}
+			>Add to a Story</button
+		>
+	</section>
 {/if}
 
-<section class="mt-2 flex-col text-center">
-	<button class="mx-1.5 my-4 rounded bg-[#b9f6ca] px-3 py-1" on:click={handleNewStory}
-		>New Story</button
-	>
-	<button class="mx-1.5 my-4 rounded bg-[#b9f6ca] px-3 py-1" on:click={handleAddToStory}
-		>Add to a Story</button
-	>
-</section>
 
-<section class="mt-6 flex-col text-center">
-	{#if isAddToStory}
+
+<section class="flex-col text-center pb-0">
+	{#if isAddToStory && $uploadIsDisabled}
 		<section class="mx-auto mt-2 flex-col text-center">
 			<select
 				bind:value={selected}
 				on:change={() => {
 					storyId = selected.storyId;
 				}}
+				class="p-2 rounded mt-0"
 			>
 				<option disabled>select a story</option>
 				{#each stories as story}
@@ -215,7 +226,7 @@
 		</section>
 	{/if}
 
-	{#if isNewStory}
+	{#if isNewStory && $uploadIsDisabled}
 		<form>
 			<label class="text-amber-100"
 				>Story name <input
@@ -237,7 +248,7 @@
 		<p class="mt-3 text-amber-100">You need to choose a story!</p>
 	{/if}
 
-	{#if !fileUploaded}
+	{#if isNewStory || isAddToStory}
 		<button
 			disabled={!$uploadIsDisabled || !onlineStatus}
 			on:click={isNewStory ? uploadFile : patchStory}
@@ -245,7 +256,7 @@
 				? 'bg-slate-400 px-3 py-1 rounded mx-1.5 my-4'
 				: 'bg-[#b9f6ca] px-3 py-1 rounded mx-1.5 my-4'}>Upload story</button
 		>
-	{:else}
+	{:else if fileUploaded}
 		<button on:click={handleReset} class="mx-1.5 my-4 rounded bg-[#b9f6ca] px-3 py-1"
 			>Upload another story?</button
 		>
