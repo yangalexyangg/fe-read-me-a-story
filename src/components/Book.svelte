@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fetchStory, fetchUserById } from '../utils/api-request';
+	import { addChapter, fetchStory, fetchUserById } from '../utils/api-request';
 	import { onMount } from 'svelte';
 	import { userId } from '../store';
 	import Player from './Player.svelte';
@@ -10,6 +10,7 @@
 
 	interface Chapter {
 		chapter_src: string;
+		created_by: string;
 	}
 
 	interface Book {
@@ -19,7 +20,7 @@
 	}
 	let book: Book = {
 		title: '',
-		chapters: [{ chapter_src: '' }],
+		chapters: [{ chapter_src: '' , created_by: ''}],
 		createdBy: ''
 	};
 
@@ -45,9 +46,12 @@
 	{:else}
 		<h2 class="text-center font-Josefin text-4xl font-normal">{book.title}</h2>
 		<img {src} alt={book.title} class=" m-auto mt-4 mb-4 max-w-[13rem]" />
-		<p>Recorded by: {book.createdBy}</p>
-		{#each book.chapters as chapter, i}
-			<Player index={i} src={chapter.chapter_src} />
-		{/each}
+		{#if book.chapters.length === 1}
+			<Player index={-1} author = {book.chapters[0].created_by} src={book.chapters[0].chapter_src} />
+		{:else}
+			{#each book.chapters as chapter, i}
+				<Player index={i} author = {chapter.created_by} src={chapter.chapter_src} />
+			{/each}
+		{/if}
 	{/if}
 </div>

@@ -195,7 +195,9 @@
 <svelte:window bind:online={onlineStatus} />
 
 {#if $stopIsDisabled && !fileUploaded}
-	<p class="mt-4 text-center text-amber-100">Ready to upload, create a new story or add to an exisiting story?</p>
+	<p class="mt-4 text-center text-amber-100">
+		Ready to upload, create a new story or add to an exisiting story?
+	</p>
 	<section class="mt-2 flex-col text-center">
 		<button class="mx-1.5 my-4 rounded bg-[#b9f6ca] px-3 py-1" on:click={handleNewStory}
 			>New Story</button
@@ -206,9 +208,7 @@
 	</section>
 {/if}
 
-
-
-<section class="flex-col text-center pb-0">
+<section class="flex-col pb-0 text-center">
 	{#if isAddToStory && $uploadIsDisabled}
 		<section class="mx-auto mt-2 flex-col text-center">
 			<select
@@ -216,7 +216,7 @@
 				on:change={() => {
 					storyId = selected.storyId;
 				}}
-				class="p-2 rounded mt-0"
+				class="mt-0 rounded p-2"
 			>
 				<option disabled>select a story</option>
 				{#each stories as story}
