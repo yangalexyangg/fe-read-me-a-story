@@ -12,7 +12,7 @@ Follow the instructions below to configure and run your own instance of the Read
 
 ### Requirements
 
-This project was built using Svelte, TypeScript and Tailwind and requires Node.js (v17.6) and npm (v8.5).
+This project was built using Svelte, TypeScript and Tailwind and uses Firebase. The project requires Node.js (v17.6) and npm (v8.5).
 
 You will need to set up and run the [Read Me A Story API](https://github.com/yangalexyangg/be-read-me-a-story).
 
