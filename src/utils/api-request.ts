@@ -155,10 +155,10 @@ export const createInvitedUser = async (
 
 export const addChapter = async (newChapter: {}, storyId: string) => {
 	try {
-		const updatedChapter = await apiCall.patch(`/stories/story/${storyId}`, newChapter)
-		return updatedChapter.data
+		const updatedChapter = await apiCall.patch(`/stories/story/${storyId}`, newChapter);
+		return updatedChapter.data;
 	} catch (error) {
 		console.error(error);
 		return Promise.reject();
 	}
-}
+};
