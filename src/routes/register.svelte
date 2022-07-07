@@ -131,7 +131,7 @@
 		sveltekit:prefetch
 		href="/"
 		class="underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4"
-		><p class="text-center font-Josefin font-normal text-amber-100 mt-4">Continue</p></a
+		><p class="mt-4 text-center font-Josefin font-normal text-amber-100">Continue</p></a
 	>
 {/if}
 

@@ -24,9 +24,10 @@
 
 <h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Invite family members</h2>
 {#if userInvited}
-	<p class="block text-center text-amber-100 my-4">Your family member was successfully invited!</p>
-	<button class="delay-5 m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 hover:text-white" on:click={inviteAgain}
-		>Invite another?</button
+	<p class="my-4 block text-center text-amber-100">Your family member was successfully invited!</p>
+	<button
+		class="delay-5 m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 hover:text-white"
+		on:click={inviteAgain}>Invite another?</button
 	>
 {:else if isError}
 	<p class="my-4 block text-center text-amber-100">
