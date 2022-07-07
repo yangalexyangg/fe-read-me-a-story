@@ -131,7 +131,7 @@
 		sveltekit:prefetch
 		href="/"
 		class="underline decoration-amber-100 decoration-solid decoration-2 underline-offset-4"
-		><p class="text-center font-Josefin font-normal text-amber-100">Continue</p></a
+		><p class="text-center font-Josefin font-normal text-amber-100 mt-4">Continue</p></a
 	>
 {/if}
 
@@ -172,6 +172,7 @@
 		<input
 			bind:value={user.fullName}
 			type="text"
+			placeholder="Owly"
 			class="mb-4 rounded bg-amber-100 p-2"
 			required
 		/><br />
@@ -189,7 +190,7 @@
 			<input
 				bind:value={family.familyName}
 				type="text"
-				placeholder="Hamilton Family"
+				placeholder="Featherington"
 				class="mb-4 rounded bg-amber-100 p-2"
 				required
 			/><br />

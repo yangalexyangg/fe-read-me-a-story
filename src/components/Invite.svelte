@@ -24,9 +24,9 @@
 
 <h2 class="text-center font-Josefin text-4xl font-normal text-amber-100">Invite family members</h2>
 {#if userInvited}
-	<p class="block text-center text-amber-100">User was invited!</p>
-	<button class="ml-36 rounded bg-[#b9f6ca] px-4 py-2" on:click={inviteAgain}
-		>Invite another user?</button
+	<p class="block text-center text-amber-100 my-4">Your family member was successfully invited!</p>
+	<button class="delay-5 m-auto block rounded bg-[#b9f6ca] px-4 py-2 transition duration-100 ease-in-out hover:-translate-y-1 hover:scale-95 hover:bg-indigo-500 hover:text-white" on:click={inviteAgain}
+		>Invite another?</button
 	>
 {:else if isError}
 	<p class="my-4 block text-center text-amber-100">
@@ -38,7 +38,7 @@
 	>
 {:else}
 	<form class="p-2 text-center" on:submit|preventDefault={handleSubmit}>
-		<label class="block p-2 text-center text-amber-100" for="email">Enter email</label>
+		<label class="block p-2 text-center text-amber-100" for="email">Email address</label>
 		<input
 			class="mb-6 rounded bg-amber-100 p-2"
 			bind:value={email}
