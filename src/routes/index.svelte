@@ -24,7 +24,7 @@
 				<div
 					class="m-auto my-6 max-w-[14rem] rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center"
 				>
-					<img src={microphoneSrc} alt="microphone" class="m-auto mt-4 mb-4 max-w-[5rem]" />
+					<img {microphoneSrc} alt="microphone" class="m-auto mt-4 mb-4 max-w-[5rem]" />
 				</div></a
 			>
 		</li>
@@ -36,7 +36,7 @@
 				<div
 					class="m-auto my-6 max-w-[14rem] rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center "
 				>
-					<img src={storySrc} alt="story" class="m-auto mt-4 mb-4 max-w-[5rem]" />
+					<img {storySrc} alt="story" class="m-auto mt-4 mb-4 max-w-[5rem]" />
 				</div></a
 			>
 		</li>

@@ -9,7 +9,7 @@
 	let isRecording: boolean = false;
 	let isRecordingStopped: boolean = false;
 
-	let microphoneSrc = '/images/microphone.png';
+	let microphoneSrc = 'images/microphone.png';
 
 	onMount(async () => {
 		const stream: MediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -67,7 +67,7 @@
 			? 'm-auto my-6 max-w-[14rem] rounded border-8 border-solid  border-[#b9f6ca]  bg-amber-100 py-5 text-center animate-pulse'
 			: 'm-auto my-6 max-w-[14rem] rounded border-8 border-solid border-[#b9f6ca] bg-amber-100 py-5 text-center'}
 	>
-		<img src={microphoneSrc} alt="microphone" class="m-auto mt-4 mb-4 max-w-[5rem]" />
+		<img {microphoneSrc} alt="microphone" class="m-auto mt-4 mb-4 max-w-[5rem]" />
 	</div>
 	{#if isRecording}
 		<p class="text-amber-100">Recording in progress...</p>
